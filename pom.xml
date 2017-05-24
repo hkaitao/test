@@ -6,7 +6,7 @@
     <parent>
         <artifactId>spring-boot-starter-parent</artifactId>
         <groupId>org.springframework.boot</groupId>
-        <version>1.4.5.RELEASE</version>
+        <version>1.3.3.RELEASE</version>
     </parent>
 
     <groupId>com.test.stream</groupId>
@@ -41,25 +41,11 @@
                 <artifactId>logback-classic</artifactId>
                 <version>1.1.7</version>
             </dependency>
-
-            <dependency>
-                <groupId>com.yiji.boot</groupId>
-                <artifactId>yiji-boot-core</artifactId>
-                <version>${yiji.boot.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.yiji.boot</groupId>
-                <artifactId>yiji-boot-starter-jdbc</artifactId>
-                <version>${yiji.boot.version}</version>
-            </dependency>
-
             <dependency>
                 <groupId>org.mvel</groupId>
                 <artifactId>mvel2</artifactId>
                 <version>${mvel.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>com.yjf.common</groupId>
                 <artifactId>yjf-common-util</artifactId>
