@@ -9,7 +9,7 @@ import com.yjf.common.util.RandomStringUtils;
  * Created by alpha on 2017/5/24.
  */
 public class Buileder {
-    public Event buildEvent(){
+    public static Event buildEvent(){
         String bankCardAccount = Constant.BANKCARD_PRIFIX + RandomStringUtils.random(5, RandomStringUtils.NUMERIC_CHARS_STR);
         String userId = Constant.USERID_PRIFIX + RandomStringUtils.random(5, RandomStringUtils.NUMERIC_CHARS_STR);
         String partyUserId = Constant.USERID_PRIFIX + RandomStringUtils.random(5, RandomStringUtils.NUMERIC_CHARS_STR);
