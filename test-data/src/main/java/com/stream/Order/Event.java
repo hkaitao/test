@@ -1,4 +1,4 @@
-package com.stream.order;
+package com.stream.Order;
 
 import java.math.BigDecimal;
 import java.util.Date;
