@@ -60,6 +60,17 @@
                 <version>${mvel.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.yjf.common</groupId>
+                <artifactId>yjf-common-util</artifactId>
+                <version>2.2.20170504</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>*</artifactId>
+                        <groupId>ch.qos.logback</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

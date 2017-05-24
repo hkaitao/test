@@ -11,6 +11,11 @@
     </parent>
 
     <artifactId>test-data</artifactId>
-
+    <dependencies>
+        <dependency>
+            <groupId>com.yjf.common</groupId>
+            <artifactId>yjf-common-util</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
