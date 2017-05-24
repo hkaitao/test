@@ -22,6 +22,36 @@
         <module>test-main</module>
     </modules>
 
+    <properties>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <yiji.boot.version>1.2-SNAPSHOT</yiji.boot.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <dependency>
+                <groupId>com.yiji.boot</groupId>
+                <artifactId>yiji-boot-core</artifactId>
+                <version>${yiji.boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yiji.boot</groupId>
+                <artifactId>yiji-boot-starter-jdbc</artifactId>
+                <version>${yiji.boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mvel</groupId>
+                <artifactId>mvel2</artifactId>
+                <version>${mvel.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
     <build>
         <pluginManagement>
             <plugins>
