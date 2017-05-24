@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>yiji-boot-parent</artifactId>
+        <groupId>com.yiji.boot</groupId>
+        <version>1.2-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.test.stream</groupId>
+    <artifactId>com-test-stream</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>com.test.stream</name>
+    <url>http://www.yiji.com</url>
+    <modules>
+        <module>test-service</module>
+        <module>test-data</module>
+        <module>test-main</module>
+    </modules>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.jacoco</groupId>
+                                        <artifactId>jacoco-maven-plugin</artifactId>
+                                        <versionRange>[0.7.2.201409121644,)</versionRange>
+                                        <goals>
+                                            <goal>prepare-agent</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore/>
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.7.2</version>
+                <configuration>
+                    <forkMode>once</forkMode>
+                    <argLine>-Dfile.encoding=utf-8</argLine>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <!--默认启用-->
+            </activation>
+            <distributionManagement>
+                <repository>
+                    <id>nexus-releases</id>
+                    <name>Internal Release Repository</name>
+                    <url>http://192.168.45.35:8081/nexus/content/repositories/releases/</url>
+                </repository>
+            </distributionManagement>
+            <properties>
+                <system.environment>dev</system.environment>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>online</id>
+            <distributionManagement>
+                <repository>
+                    <id>nexus-releases</id>
+                    <name>Internal Release Repository</name>
+                    <url>http://192.168.45.199:8081/nexus/content/repositories/releases/</url>
+                </repository>
+            </distributionManagement>
+            <properties>
+                <system.environment>online</system.environment>
+            </properties>
+        </profile>
+    </profiles>
+
+</project>
