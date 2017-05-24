@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <appender name="projectFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/var/log/stream/stream-30dt.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/var/log/stream/stream-30dt.log.%d{yyyy-MM-dd}.%i
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>1024MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{0}:%L-%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="allFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/var/log/stream/all-30dt.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/var/log/botanymall/all-30dt.log.%d{yyyy-MM-dd}.%i
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>1024MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{0}:%L-%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="projectAsyncAppender" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="projectFileAppender"/>
+    </appender>
+
+    <appender name="allAsyncAppender" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="allFileAppender"/>
+    </appender>
+
+    <logger name="com.stream" level="DEBUG">
+        <appender-ref ref="projectAsyncAppender"></appender-ref>
+     </logger>
+
+    <root level="DEBUG">
+        <appender-ref ref="allAsyncAppender"></appender-ref>
+    </root>
+</configuration>

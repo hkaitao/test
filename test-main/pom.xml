@@ -6,28 +6,53 @@
 
     <parent>
         <groupId>com.test.stream</groupId>
-        <artifactId>com-test-stream</artifactId>
+        <artifactId>stream-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>test-main</artifactId>
-
+    <name>test-main</name>
+    <packaging>jar</packaging>
+    <properties>
+        <deploy.skip>true</deploy.skip>
+        <start-class>com.stream.Main</start-class>
+    </properties>
     <dependencies>
         <dependency>
-            <groupId>com.carrotsearch</groupId>
-            <artifactId>junit-benchmarks</artifactId>
+            <groupId>com.test.stream</groupId>
+            <artifactId>stream-parent</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.test.stream</groupId>
+            <artifactId>stream-parent</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
-
         <dependency>
-            <groupId>com.yiji.boot</groupId>
-            <artifactId>yiji-boot-core</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+        </dependency>
     </dependencies>
+    <build>
+        <finalName>botanymall</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>
