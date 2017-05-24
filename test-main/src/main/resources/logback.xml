@@ -41,7 +41,7 @@
         <appender-ref ref="projectAsyncAppender"></appender-ref>
      </logger>
 
-    <root level="DEBUG">
+    <root level="INFO">
         <appender-ref ref="allAsyncAppender"></appender-ref>
     </root>
 </configuration>
