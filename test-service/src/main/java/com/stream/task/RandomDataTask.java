@@ -18,5 +18,6 @@ public class RandomDataTask extends AbstractPoolManagment<Event> {
     public void exec(Event event) {
         poolManagement.start(new Processor<Event>(event));
     }
+
 }
     
