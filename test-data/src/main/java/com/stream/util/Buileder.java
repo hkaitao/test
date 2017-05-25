@@ -1,6 +1,6 @@
 package com.stream.util;
 
-import com.stream.order.Event;
+import com.stream.info.Event;
 import com.yjf.common.id.GID;
 import com.yjf.common.id.OID;
 import com.yjf.common.util.RandomStringUtils;
