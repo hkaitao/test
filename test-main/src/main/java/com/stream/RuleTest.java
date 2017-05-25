@@ -5,15 +5,18 @@ import com.stream.util.Buileder;
 import com.yjf.common.component.ExcelReadGenerator;
 import com.yjf.common.component.impl.ExcelReadGeneratorImpl;
 import com.yjf.common.util.StringUtils;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.io.FileInputStream;
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,6 +25,7 @@ import java.util.Date;
  * Created by alpha on 2017/5/24.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = { RuleTest.class })
 @SpringBootApplication
 @Configuration
 public class RuleTest {
@@ -29,17 +33,30 @@ public class RuleTest {
     private String[] HEADER_INFO = { "merchantUserId", "userId", "event", "bankAccountNo", "tradeAmont", "createTime"};
     private SimpleDateFormat sdftime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
+    private static final String PROFILE = "stest";
+
+    @BeforeClass
+    public static void initEnv() {
+        System.setProperty("spring.profiles.active", PROFILE);
+    }
+
     @Test
     public void testRule1() throws IOException, ParseException {
-       String dataPath = "/rule1/情况1-测试跨月.xlsx";
-        fillAndSendData(dataPath);
+        String dataPath = "rule1/情况1-测试跨月.xlsx";
+        boolean result1 = fillAndSendData(dataPath);
+        /*Assert(result1 == true, "规则1-")*/
+
+        dataPath = "rule1/情况1-测试跨月.xlsx";
     }
 
     public boolean fillAndSendData(String dataPath) throws IOException, ParseException {
         ClassLoader classLoader = this.getClass().getClassLoader();
-        FileInputStream fileInputStream = new FileInputStream(dataPath);
+        URL url = classLoader.getResource(dataPath);
+        System.out.println(url.getPath());
+        BufferedInputStream bufferedInputStream = (BufferedInputStream) classLoader.getResourceAsStream(dataPath);
         ExcelReadGenerator excelReadGenerator = new ExcelReadGeneratorImpl(0, HEADER_INFO.length,
-                fileInputStream, isExcel2003(dataPath));
+                bufferedInputStream, isExcel2003(dataPath));
+        excelReadGenerator.nextRowValue();
 
         for (int i = 0; i < excelReadGenerator.totalRowNum(); i++) {
             String[] rowValue = excelReadGenerator.nextRowValue();
