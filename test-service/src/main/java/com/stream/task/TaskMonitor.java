@@ -42,7 +42,7 @@ public class TaskMonitor  implements ApplicationListener<ContextRefreshedEvent> 
                 try {
                     randomDataTask.exec(new Event());
                 } catch (Throwable throwable) {
-                    logger.error("出现意外错误……",throwable);
+                    logger.error("出现意外错误",throwable);
                 }
             }
         }

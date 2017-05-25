@@ -13,7 +13,7 @@ public abstract class AbstractPoolManagment<T> {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private PoolManagement poolManagement;
+    protected PoolManagement poolManagement;
 
     public abstract void exec(T t);
 }
