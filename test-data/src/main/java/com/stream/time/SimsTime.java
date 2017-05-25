@@ -1,7 +1,5 @@
 package com.stream.time;
 
-import com.yjf.common.id.OID;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,8 +19,8 @@ public class SimsTime {
         }
     }
 
-    public long getTime(){
-        startTime = startTime + 1000l;
+    public static  long getTime(){
+        startTime = startTime + 11l;
         return startTime;
     }
 
