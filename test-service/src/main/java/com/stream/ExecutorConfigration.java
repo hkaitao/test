@@ -5,6 +5,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
+import java.util.concurrent.RejectedExecutionHandler;
+import java.util.concurrent.ThreadPoolExecutor;
+
 /**
  * Created by Administrator on 2017/5/24.
  */
@@ -14,11 +17,12 @@ public class ExecutorConfigration {
     @Bean(name = "dataTaskExecutor")
     public ThreadPoolTaskExecutor dataTaskExecutor() {
         ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
-        threadPoolTaskExecutor .setCorePoolSize(100);
+        threadPoolTaskExecutor .setCorePoolSize(400);
         threadPoolTaskExecutor.setKeepAliveSeconds(200);
-        threadPoolTaskExecutor.setMaxPoolSize(100);
+        threadPoolTaskExecutor.setMaxPoolSize(800);
         threadPoolTaskExecutor.setQueueCapacity(1000);
         threadPoolTaskExecutor.setAwaitTerminationSeconds(60);
+        threadPoolTaskExecutor.setRejectedExecutionHandler( new ThreadPoolExecutor.CallerRunsPolicy());
         threadPoolTaskExecutor.setWaitForTasksToCompleteOnShutdown(Boolean.TRUE);
         return threadPoolTaskExecutor;
     }
