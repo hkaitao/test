@@ -1,6 +1,6 @@
 package com.stream;
 
-import com.stream.order.Event;
+import com.stream.info.Event;
 import com.stream.util.Buileder;
 import com.yjf.common.component.ExcelReadGenerator;
 import com.yjf.common.component.impl.ExcelReadGeneratorImpl;
