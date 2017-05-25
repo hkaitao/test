@@ -16,6 +16,14 @@
             <groupId>com.yjf.common</groupId>
             <artifactId>yjf-common-util</artifactId>
         </dependency>
+        <dependency>
+            <groupId>apache-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

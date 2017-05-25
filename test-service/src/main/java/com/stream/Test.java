@@ -1,4 +1,4 @@
-package com.yiji.test;
+package com.stream;
 
 /**
  * Created by alpha on 2017/5/24.
