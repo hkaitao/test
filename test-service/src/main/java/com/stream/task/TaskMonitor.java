@@ -1,5 +1,6 @@
 package com.stream.task;
 
+import com.stream.factory.EventFactory;
 import com.stream.info.Event;
 import com.yjf.common.log.Logger;
 import com.yjf.common.log.LoggerFactory;
@@ -40,7 +41,7 @@ public class TaskMonitor  implements ApplicationListener<ContextRefreshedEvent> 
         public void run() {
             while (running) {
                 try {
-                    randomDataTask.exec(new Event());
+                    randomDataTask.exec(EventFactory.buildEvent());
                 } catch (Throwable throwable) {
                     logger.error("出现意外错误",throwable);
                 }
