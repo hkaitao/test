@@ -1,5 +1,6 @@
 package com.stream.util;
 
+import com.alibaba.fastjson.JSON;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,7 +13,9 @@ public class RabbitMqSender {
     private AmqpTemplate amqpTemplate;
 
     public <T> void send(T sendEntity){
-        amqpTemplate.convertAndSend(sendEntity);
+        String josnStr = JSON.toJSONString(sendEntity);
+
+        amqpTemplate.convertAndSend(josnStr);
     }
 
     /*
