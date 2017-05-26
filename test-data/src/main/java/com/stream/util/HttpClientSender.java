@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.RequestEntity;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
@@ -19,21 +20,34 @@ import java.io.IOException;
 public class HttpClientSender {
 
     private static Log logger = LogFactory.getLog(HttpClientSender.class);
+    private static MultiThreadedHttpConnectionManager connectionManager = new MultiThreadedHttpConnectionManager();
+    private static String url = "";
+    private static int timeout = 60;
+
+    static{
+        /*postMethod.setRequestHeader("Connection", "Keep-Alive");
+        postMethod.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler());
+        postMethod.getParams().setParameter(HttpMethodParams.SO_TIMEOUT, timeout);*/
+        connectionManager.setConnectionStaleCheckingEnabled(true);
+        connectionManager.setMaxConnectionsPerHost(300);
+        connectionManager.setMaxTotalConnections(1000);
+    }
 
     public static int send(Object object, String url, int timeout){
         String jsonStr = JSON.toJSONString(object);
         logger.info("本次发送的数据为:" + jsonStr);
 
-        HttpClient httpClient = new HttpClient();
+        HttpClient httpClient = new HttpClient(connectionManager);
         PostMethod postMethod = new PostMethod(url);
         int statusCode = HttpStatus.SC_OK;
         /*设置传入的参数*/
 
         try {
-            RequestEntity requestEntity = new StringRequestEntity(jsonStr, "application/json", "UTF-8");
-            postMethod.setRequestEntity(requestEntity);
             postMethod.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler());
             postMethod.getParams().setParameter(HttpMethodParams.SO_TIMEOUT, timeout);
+            postMethod.setRequestHeader("Connection", "Keep-Alive");
+            RequestEntity requestEntity = new StringRequestEntity(jsonStr, "application/json", "UTF-8");
+            postMethod.setRequestEntity(requestEntity);
 
             statusCode = httpClient.executeMethod(postMethod);
 
