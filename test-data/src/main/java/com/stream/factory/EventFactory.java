@@ -25,7 +25,6 @@ public class EventFactory {
         return e;
     }
 
-
     public static  int getRandomNum(int min,int max){
         return random.nextInt(max)%(max-min+1) + min;
     }

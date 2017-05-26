@@ -21,30 +21,31 @@ public class TaskMonitor  implements ApplicationListener<ContextRefreshedEvent> 
     @Autowired
     private RandomDataTask randomDataTask;
 
-    private volatile boolean running = true;
+    private volatile boolean running = Boolean.TRUE;
 
     private static final int threadMaxnum = 10;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        for (int i =1 ;i<=threadMaxnum; i++){
-            Thread thread = new Thread(new TaskWorker());
-            thread.setName("task-monitor" + i);
-            thread.setDaemon(true);
-            thread.start();
+        while (running) {
+            for (int i =1 ;i<=threadMaxnum; i++){
+                Thread thread = new Thread(new TaskWorker());
+                thread.setName("task-monitor" + i);
+                thread.setDaemon(true);
+                thread.start();
+            }
         }
+
     }
 
     private class TaskWorker implements Runnable {
 
         @Override
         public void run() {
-            while (running) {
-                try {
-                    randomDataTask.exec(EventFactory.buildEvent());
-                } catch (Throwable throwable) {
-                    logger.error("出现意外错误",throwable);
-                }
+            try {
+                randomDataTask.exec(EventFactory.buildEvent());
+            } catch (Throwable throwable) {
+                logger.error("出现意外错误",throwable);
             }
         }
 

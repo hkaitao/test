@@ -25,13 +25,26 @@ public class SimsTime {
     }
 
     public static void main(String[] args) throws ParseException {
-        System.out.println();
+        long time = SimsTime.getLong("2015-01-02 00:00:00");
+        Date d = new Date(time+86400000);
+        System.out.println(d);
+
     }
 
-    public static long dateToStamp(String s) throws ParseException {
+    private static long dateToStamp(String s) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = simpleDateFormat.parse(s);
         long ts = date.getTime();
         return ts;
+    }
+
+    public static long getLong(String s){
+        long time = 0L;
+        try {
+            time =   dateToStamp(s);
+        } catch (ParseException e) {
+            System.exit(0);
+        }
+        return time;
     }
 }
