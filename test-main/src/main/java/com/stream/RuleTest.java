@@ -2,6 +2,7 @@ package com.stream;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.stream.hq.HqSender;
 import com.stream.info.Event;
 import com.stream.util.Buileder;
 import com.stream.util.HttpClientNewSender;
@@ -14,6 +15,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.context.annotation.Configuration;
@@ -40,8 +42,10 @@ public class RuleTest {
     private Log logger = LogFactory.getLog(this.getClass());
     private String[] HEADER_INFO = { "merchantUserId", "userId", "event", "bankAccountNo", "tradeAmont", "createTime", "dataDisposeSehedule", "verifiedData"};
     private SimpleDateFormat sdftime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
     private static final String PROFILE = "stest";
+
+    @Autowired
+    private HqSender hqSender;
 
     @BeforeClass
     public static void initEnv() {
@@ -237,6 +241,7 @@ public class RuleTest {
         List<Event> eventList = parseExcel(dataPath);
         for(Event event : eventList){
             /*发送到流立方*/
+            hqSender.send(JSONObject.toJSONString(event));
         }
         return true;
     }
@@ -247,7 +252,7 @@ public class RuleTest {
         for(Event event : eventList){
             /*验证每次调用的结果是否和预先设置的一致*/
             flag++;
-            String jsonstr = HttpClientNewSender.send(event, dataPath);
+            String jsonstr = HttpClientNewSender.send(event);
             JSONObject jsonObject = JSON.parseObject(jsonstr);
             String ruleName = (String) jsonObject.get("ruleName");
 

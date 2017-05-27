@@ -39,7 +39,7 @@ public class HttpClientNewSender {
     private static int HTTP_MAX_CONNECTIONS_PER_ROUTE = 1000;
     private static int HTTPCLIENT_CONNECT_TIMEOUT = 10*1000;
     private static int HTTPCLIENT_SOCKET_TIMEOUT = 10*1000;
-
+    private static String url = "lcoalhost";
 
     static {
         httpClientConnectionManager = new PoolingHttpClientConnectionManager();
@@ -86,7 +86,7 @@ public class HttpClientNewSender {
         return httpClient;
     }
 
-    public static String send(Object object, String url) {
+    public static String send(Object object) {
         CloseableHttpClient httpClient = getHttpClient();
         CloseableHttpResponse httpResponse = null;
 
