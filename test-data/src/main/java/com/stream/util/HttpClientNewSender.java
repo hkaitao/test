@@ -1,5 +1,6 @@
 package com.stream.util;
 
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -10,9 +11,9 @@ import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.protocol.HttpClientContext;
-import org.apache.http.entity.ContentType;
+import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.client.LaxRedirectStrategy;
@@ -20,8 +21,9 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.nio.charset.Charset;
+import java.io.InputStream;
 
 /**
  * Created by alpha on 2017/5/26.
@@ -84,30 +86,39 @@ public class HttpClientNewSender {
         return httpClient;
     }
 
-    public static int send(Object object, String url){
+    public static String send(Object object, String url) {
         CloseableHttpClient httpClient = getHttpClient();
         CloseableHttpResponse httpResponse = null;
 
-        HttpGet httpGet = new HttpGet(url);
-        httpGet.addHeader("Connection", "keep-alive");
+        HttpPost httpPost = new HttpPost(url);
+        httpPost.addHeader("Connection", "keep-alive");
 
+        String jsonStr = null;
         try {
-            httpResponse = httpClient.execute(httpGet);
-            if(httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
+            InputStream is=new ByteArrayInputStream(JSON.toJSONString(object).getBytes());
+            InputStreamEntity streamEntity= new InputStreamEntity(is);
+            streamEntity.setContentType("application/json");
+            httpPost.setEntity(streamEntity);
+
+            httpResponse = httpClient.execute(httpPost);
+
+            if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
                 HttpEntity httpEntity = httpResponse.getEntity();
-                String charset = null;
+
+                /*String charset = null;
                 ContentType contentType = ContentType.getOrDefault(httpEntity);
-                if(contentType != null){
+                if (contentType != null) {
                     Charset contentTypeCharset = contentType.getCharset();
-                    if(contentTypeCharset != null){
+                    if (contentTypeCharset != null) {
                         charset = contentTypeCharset.toString();
                     }
-                }
-                String jsonStr = EntityUtils.toString(httpEntity, charset);
+                }*/
+                jsonStr = EntityUtils.toString(httpEntity, "UTF-8");
+                logger.info(jsonStr);
             }
         } catch (IOException e) {
-            logger.error("处理请求异常",e);
+            logger.error("处理请求异常", e);
         }
-        return 3;
+        return jsonStr;
     }
 }
