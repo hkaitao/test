@@ -1,5 +1,6 @@
 package com.stream.pool;
 
+import com.alibaba.fastjson.JSONObject;
 import com.stream.hq.HqSender;
 import com.yjf.common.log.Logger;
 import com.yjf.common.log.LoggerFactory;
@@ -22,6 +23,6 @@ public class Processor<T> implements Runnable{
 
     @Override
     public void run() {
-        hqSender.send(t.toString());
+        hqSender.send(JSONObject.toJSONString(t));
     }
 }

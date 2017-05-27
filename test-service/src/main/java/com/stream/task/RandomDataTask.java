@@ -21,7 +21,7 @@ public class RandomDataTask extends AbstractPoolManagment<Event> {
 
     @Override
     public void exec(Event event) {
-        poolManagement.start(new Processor<Event>(event,hqSender));
+        poolManagement.start(new Processor<>(event,hqSender));
     }
 
 }
