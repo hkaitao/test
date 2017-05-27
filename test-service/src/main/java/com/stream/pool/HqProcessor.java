@@ -6,6 +6,8 @@ import com.stream.hq.HqSender;
 import com.yjf.common.log.Logger;
 import com.yjf.common.log.LoggerFactory;
 
+import javax.jms.JMSException;
+
 /**
  * Created by Administrator on 2017/5/25.
  */
@@ -26,6 +28,10 @@ public class HqProcessor<T> implements Runnable{
     public void run() {
         //请求风控
         //发送HQ
-        hqProducer.send(JSONObject.toJSONString(t));
+        try {
+            hqProducer.send(JSONObject.toJSONString(t));
+        } catch (JMSException e) {
+            e.printStackTrace();
+        }
     }
 }

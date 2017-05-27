@@ -48,14 +48,28 @@ public class HqConfiguration {
     }
 
 
-    @Bean(name=""){
-
+    @Bean(name="hornetQConnectionFactory")
+    public HornetQConnectionFactory hornetQConnectionFactory(){
+        long connectionTTL = 60000;
+        int consumerWindowSize = 1048576;
+        Long clientFailureCheckPeriod =30000L;
+        HornetQConnectionFactory  cf ;
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("host", "192.168.45.143");
+        map.put("port", "5445");
+        TransportConfiguration server1  =  new
+                TransportConfiguration(NettyConnectorFactory.class.getName(), map);
+        cf  = HornetQJMSClient.createConnectionFactoryWithHA(JMSFactoryType.CF,  server1);
+        cf.setConnectionTTL(connectionTTL);
+        cf.setConsumerWindowSize(consumerWindowSize);
+        cf.setClientFailureCheckPeriod(clientFailureCheckPeriod);
+        return cf;
     }
 
 
 
 
-    @Bean(name = "hqConnection")
+/*    @Bean(name = "hqConnection")
     public Connection hqConnection(){
         Connection connection = null;
         try {
@@ -77,9 +91,9 @@ public class HqConfiguration {
             e.printStackTrace();
         }
         return connection;
-    }
+    }*/
 
-    @Bean(name = "hqSession")
+/*    @Bean(name = "hqSession")
     public Session hqSession(@Qualifier("hqConnection")  Connection connection)  {
         Session session = null;
         try {
@@ -88,7 +102,7 @@ public class HqConfiguration {
             e.printStackTrace();
         }
         return session;
-    }
+    }*/
 
 
 /*    @Bean(name="hqMessageProducer")
