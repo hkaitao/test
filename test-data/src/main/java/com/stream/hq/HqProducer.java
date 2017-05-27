@@ -26,16 +26,9 @@ public class HqProducer {
         Session session = null;
         MessageProducer producer = null;
         try{
-            // Step 4.Create a JMS Connection
             connection = hornetQConnectionFactory.createConnection();
-
-            // Step 5. Create a JMS Session
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-
-            // Step 6. Create a JMS Message Producer
             producer = session.createProducer(queue);
-
-            // Step 8. Send the Message
             producer.send(session.createTextMessage(json));
 
         }catch(Exception e){
@@ -48,8 +41,7 @@ public class HqProducer {
             if(producer!= null){
                 producer.close();
             }
-            if (connection != null)
-            {
+            if (connection != null) {
                 connection.close();
             }
         }
