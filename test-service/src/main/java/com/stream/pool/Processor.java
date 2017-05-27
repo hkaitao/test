@@ -1,5 +1,6 @@
 package com.stream.pool;
 
+import com.stream.hq.HqSender;
 import com.yjf.common.log.Logger;
 import com.yjf.common.log.LoggerFactory;
 
@@ -12,12 +13,15 @@ public class Processor<T> implements Runnable{
 
     private T t ;
 
-    public Processor(T t) {
+    private HqSender hqSender;
+
+    public Processor(T t, HqSender hqSender) {
         this.t = t;
+        this.hqSender = hqSender;
     }
 
     @Override
     public void run() {
-        logger.info(t.toString());
+        hqSender.send(t.toString());
     }
 }
