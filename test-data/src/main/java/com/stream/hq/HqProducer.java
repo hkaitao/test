@@ -30,7 +30,6 @@ public class HqProducer {
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             producer = session.createProducer(queue);
             producer.send(session.createTextMessage(json));
-
         }catch(Exception e){
             e.printStackTrace();
             System.out.println("发送消息出错");
