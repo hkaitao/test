@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class RabbitMqSender {
 
     @Autowired
-    private AmqpTemplate amqpTemplate;
+    private static AmqpTemplate amqpTemplate;
 
-    public <T> void send(T sendEntity){
+    public static <T> void send(T sendEntity){
         String josnStr = JSON.toJSONString(sendEntity);
 
         amqpTemplate.convertAndSend(josnStr);

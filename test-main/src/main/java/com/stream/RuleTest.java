@@ -5,6 +5,7 @@ import com.stream.util.Buileder;
 import com.yjf.common.component.ExcelReadGenerator;
 import com.yjf.common.component.impl.ExcelReadGeneratorImpl;
 import com.yjf.common.util.StringUtils;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,10 +17,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by alpha on 2017/5/24.
@@ -30,7 +32,7 @@ import java.util.Date;
 @Configuration
 public class RuleTest {
 
-    private String[] HEADER_INFO = { "merchantUserId", "userId", "event", "bankAccountNo", "tradeAmont", "createTime"};
+    private String[] HEADER_INFO = { "merchantUserId", "userId", "event", "bankAccountNo", "tradeAmont", "createTime", "verifiedData"};
     private SimpleDateFormat sdftime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     private static final String PROFILE = "stest";
@@ -42,20 +44,37 @@ public class RuleTest {
 
     @Test
     public void testRule1() throws IOException, ParseException {
-        String dataPath = "rule1/情况1-测试跨月.xlsx";
-        boolean result1 = fillAndSendData(dataPath);
-        /*Assert(result1 == true, "规则1-")*/
+        boolean result1 = sendToStreamData("rule1/发送到流立方的数据.xlsx");
+        boolean result2 = checkVerifiedData("rule1/验证的数据.xlsx");
+        Assert.assertTrue("规则1通过\n", result2 == true);
 
-        dataPath = "rule1/情况1-测试跨月.xlsx";
+        /*dataPath = "rule1/情况2-测试相邻月.xlsx";
+        boolean result2 = sendToStreamData(dataPath);
+        Assert.assertTrue("规则1-测试相邻月通过\n", result2 == true);*/
     }
 
-    public boolean fillAndSendData(String dataPath) throws IOException, ParseException {
+    public boolean sendToStreamData(String dataPath) throws IOException, ParseException {
+        List<Event> eventList = parseExcel(dataPath);
+        for(Event event : eventList){
+            /*发送到流立方*/
+        }
+        return true;
+    }
+
+    public boolean checkVerifiedData(String dataPath) throws IOException, ParseException {
+        List<Event> eventList = parseExcel(dataPath);
+        for(Event event : eventList){
+            /*验证每次调用的结果是否和预先设置的一致*/
+        }
+        return true;
+    }
+
+    public List<Event> parseExcel(String dataPath) throws IOException, ParseException {
         ClassLoader classLoader = this.getClass().getClassLoader();
-        URL url = classLoader.getResource(dataPath);
-        System.out.println(url.getPath());
         BufferedInputStream bufferedInputStream = (BufferedInputStream) classLoader.getResourceAsStream(dataPath);
         ExcelReadGenerator excelReadGenerator = new ExcelReadGeneratorImpl(0, HEADER_INFO.length,
                 bufferedInputStream, isExcel2003(dataPath));
+        List<Event> eventList = new ArrayList<Event>();
         excelReadGenerator.nextRowValue();
 
         for (int i = 0; i < excelReadGenerator.totalRowNum(); i++) {
@@ -87,9 +106,13 @@ public class RuleTest {
                 event.setCreateTime(createTime);
             }
 
-            /*远程调用http接口*/
+            if(StringUtils.isNotBlank(rowValue[6])){
+                event.setExtraData(rowValue[6]);
+            }
+
+            eventList.add(event);
         }
-        return true;
+        return eventList;
     }
 
     private boolean isExcel2003(String filePath) {

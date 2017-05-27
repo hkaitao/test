@@ -40,6 +40,16 @@ public class Event {
 
     private String dataOperateType;
 
+    private String extraData;
+
+    public String getExtraData() {
+        return extraData;
+    }
+
+    public void setExtraData(String extraData) {
+        this.extraData = extraData;
+    }
+
     public String getGid() {
         return gid;
     }
