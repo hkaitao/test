@@ -21,7 +21,7 @@ public class TaskMonitor  implements ApplicationListener<ContextRefreshedEvent> 
     @Autowired
     private RandomDataTask randomDataTask;
 
-    private volatile boolean running = Boolean.TRUE;
+    private volatile boolean running = Boolean.FALSE;
 
     private static final int threadMaxnum = 10;
 
