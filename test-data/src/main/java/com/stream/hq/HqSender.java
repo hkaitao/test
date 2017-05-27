@@ -10,7 +10,7 @@ import javax.jms.*;
 /**
  * Created by Administrator on 2017/5/27.
  */
-@Service("HqSender")
+@Service("hqSender")
 public class HqSender {
 
     @Autowired

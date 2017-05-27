@@ -1,6 +1,11 @@
 package com.stream;
 
+import org.hornetq.api.core.TransportConfiguration;
 import org.hornetq.api.jms.HornetQJMSClient;
+import org.hornetq.api.jms.JMSFactoryType;
+import org.hornetq.core.remoting.impl.netty.NettyConnectorFactory;
+import org.hornetq.jms.client.HornetQConnectionFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,9 +13,9 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jndi.JndiObjectFactoryBean;
 import org.springframework.jndi.JndiTemplate;
 
-import javax.jms.ConnectionFactory;
-import javax.jms.Queue;
+import javax.jms.*;
 import javax.naming.NamingException;
+import java.util.HashMap;
 import java.util.Properties;
 
 /**
@@ -41,6 +46,61 @@ public class HqConfiguration {
         Queue queue = HornetQJMSClient.createQueue(queuename);
         return queue;
     }
+
+
+    @Bean(name=""){
+
+    }
+
+
+
+
+    @Bean(name = "hqConnection")
+    public Connection hqConnection(){
+        Connection connection = null;
+        try {
+            long connectionTTL = 60000;
+            int consumerWindowSize = 1048576;
+            Long clientFailureCheckPeriod =30000L;
+            HornetQConnectionFactory  cf ;
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("host", "192.168.45.143");
+            map.put("port", "5445");
+            TransportConfiguration server1  =  new
+                    TransportConfiguration(NettyConnectorFactory.class.getName(), map);
+            cf  = HornetQJMSClient.createConnectionFactoryWithHA(JMSFactoryType.CF,  server1);
+            cf.setConnectionTTL(connectionTTL);
+            cf.setConsumerWindowSize(consumerWindowSize);
+            cf.setClientFailureCheckPeriod(clientFailureCheckPeriod);
+            connection = cf.createConnection();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return connection;
+    }
+
+    @Bean(name = "hqSession")
+    public Session hqSession(@Qualifier("hqConnection")  Connection connection)  {
+        Session session = null;
+        try {
+            session  = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+        } catch (JMSException e) {
+            e.printStackTrace();
+        }
+        return session;
+    }
+
+
+/*    @Bean(name="hqMessageProducer")
+    public MessageProducer hqMessageProducer(@Qualifier("hqSession") Session session,@Qualifier("queue")Queue queue){
+        MessageProducer producer = null;
+        try {
+            producer = session.createProducer(queue);
+        } catch (JMSException e) {
+            e.printStackTrace();
+        }
+        return producer;
+    }*/
 
 
     @Bean(name = "jmsTemplate")
