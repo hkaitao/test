@@ -20,6 +20,7 @@ import org.apache.http.impl.client.LaxRedirectStrategy;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
+import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -29,6 +30,7 @@ import java.io.InputStream;
  * Created by alpha on 2017/5/26.
  */
 /*使用新版本的httpclient发送数据，使用新版本的线程池*/
+@Service(value = "httpClientsender")
 public class HttpClientNewSender {
     private static Log logger = LogFactory.getLog(HttpClientNewSender.class);
 
@@ -39,7 +41,7 @@ public class HttpClientNewSender {
     private static int HTTP_MAX_CONNECTIONS_PER_ROUTE = 1000;
     private static int HTTPCLIENT_CONNECT_TIMEOUT = 10*1000;
     private static int HTTPCLIENT_SOCKET_TIMEOUT = 10*1000;
-    private static String url = "lcoalhost";
+    private static String url = "http://192.168.45.142:9380/audit";
 
     static {
         httpClientConnectionManager = new PoolingHttpClientConnectionManager();
@@ -95,7 +97,14 @@ public class HttpClientNewSender {
 
         String jsonStr = null;
         try {
-            InputStream is=new ByteArrayInputStream(JSON.toJSONString(object).getBytes());
+            InputStream is;
+
+            if(object instanceof String){
+                String send = (String) object;
+                is=new ByteArrayInputStream(send.getBytes());
+            }else {
+                is = new ByteArrayInputStream(JSON.toJSONString(object).getBytes());
+            }
             InputStreamEntity streamEntity= new InputStreamEntity(is);
             streamEntity.setContentType("application/json");
             httpPost.setEntity(streamEntity);

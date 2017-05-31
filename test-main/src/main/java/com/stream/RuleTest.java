@@ -1,6 +1,7 @@
 package com.stream;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.stream.hq.HqSender;
 import com.stream.info.Event;
@@ -29,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by alpha on 2017/5/24.
@@ -47,15 +49,34 @@ public class RuleTest {
     @Autowired
     private HqSender hqSender;
 
+    @Autowired
+    private HttpClientNewSender httpClientNewSender;
+
     @BeforeClass
     public static void initEnv() {
         System.setProperty("spring.profiles.active", PROFILE);
     }
 
     @Test
+    public void testConnection(){
+        String request = "[{\n" +
+                "\t    \"@type\":\"cn.com.bsfit.frms.obj.AuditObject\",\n" +
+                "\t    \"frms_biz_code\": \"PAY.DK\"\n" +
+                "    }]";
+        String response = HttpClientNewSender.send(request);
+        JSONArray jsonArray = JSON.parseArray(response);
+        Map<String, Object> jsonmap = (Map<String, Object>) jsonArray.get(0);
+        JSONArray jsonArray1 = (JSONArray) jsonmap.get("risks");
+        if(jsonArray1 != null && jsonArray1.size() > 0){
+            Map<String, Object> jsonmap1 = (Map<String, Object>) jsonArray1.get(0);
+            System.out.println(jsonmap1.get("ruleName"));
+        }
+    }
+
+    @Test
     public void testRule1() throws IOException, ParseException {
         boolean result1 = sendToStreamData("rule1/发送到流立方的数据.xlsx");
-        boolean result2 = checkVerifiedData("rule1/验证的数据.xlsx");
+        boolean result2 = checkVerifiedData("rule1/验证数据.xlsx");
         Assert.assertTrue("规则1通过\n", result2 == true);
 
     }
@@ -63,7 +84,7 @@ public class RuleTest {
     @Test
     public void testRule2() throws IOException, ParseException {
         boolean result1 = sendToStreamData("rule2/发送到流立方的数据.xlsx");
-        boolean result2 = checkVerifiedData("rule2/验证的数据.xlsx");
+        boolean result2 = checkVerifiedData("rule2/验证数据.xlsx");
         Assert.assertTrue("规则2通过\n", result2 == true);
 
     }
@@ -71,7 +92,7 @@ public class RuleTest {
     @Test
     public void testRule3() throws IOException, ParseException {
         boolean result1 = sendToStreamData("rule3/发送到流立方的数据.xlsx");
-        boolean result2 = checkVerifiedData("rule3/验证的数据.xlsx");
+        boolean result2 = checkVerifiedData("rule3/验证数据.xlsx");
         Assert.assertTrue("规则3通过\n", result2 == true);
 
     }
@@ -79,7 +100,7 @@ public class RuleTest {
     @Test
     public void testRule4() throws IOException, ParseException {
         boolean result1 = sendToStreamData("rule4/发送到流立方的数据.xlsx");
-        boolean result2 = checkVerifiedData("rule4/验证的数据.xlsx");
+        boolean result2 = checkVerifiedData("rule4/验证数据.xlsx");
         Assert.assertTrue("规则4通过\n", result2 == true);
 
     }
@@ -87,7 +108,7 @@ public class RuleTest {
     @Test
     public void testRule5() throws IOException, ParseException {
         boolean result1 = sendToStreamData("rule5/发送到流立方的数据.xlsx");
-        boolean result2 = checkVerifiedData("rule5/验证的数据.xlsx");
+        boolean result2 = checkVerifiedData("rule5/验证数据.xlsx");
         Assert.assertTrue("规则5通过\n", result2 == true);
 
     }
@@ -103,7 +124,7 @@ public class RuleTest {
     @Test
     public void testRule7() throws IOException, ParseException {
         boolean result1 = sendToStreamData("rule7/发送到流立方的数据.xlsx");
-        boolean result2 = checkVerifiedData("rule7/验证的数据.xlsx");
+        boolean result2 = checkVerifiedData("rule7/验证数据.xlsx");
         Assert.assertTrue("规则7通过\n", result2 == true);
 
     }
@@ -111,7 +132,7 @@ public class RuleTest {
     @Test
     public void testRule8() throws IOException, ParseException {
         boolean result1 = sendToStreamData("rule8/发送到流立方的数据.xlsx");
-        boolean result2 = checkVerifiedData("rule8/验证的数据.xlsx");
+        boolean result2 = checkVerifiedData("rule8/验证数据.xlsx");
         Assert.assertTrue("规则8通过\n", result2 == true);
 
     }
@@ -119,7 +140,7 @@ public class RuleTest {
     @Test
     public void testRule9() throws IOException, ParseException {
         boolean result1 = sendToStreamData("rule9/发送到流立方的数据.xlsx");
-        boolean result2 = checkVerifiedData("rule9/验证的数据.xlsx");
+        boolean result2 = checkVerifiedData("rule9/验证数据.xlsx");
         Assert.assertTrue("规则9通过\n", result2 == true);
 
     }
