@@ -1,6 +1,5 @@
 package com.stream.info;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -20,7 +19,7 @@ public class Event {
 
     private String dataBizType;
 
-    private BigDecimal tradeAmont;
+    private long tradeAmont;
 
     private String direction;
 
@@ -98,11 +97,11 @@ public class Event {
         this.dataBizType = dataBizType;
     }
 
-    public BigDecimal getTradeAmont() {
+    public long getTradeAmont() {
         return tradeAmont;
     }
 
-    public void setTradeAmont(BigDecimal tradeAmont) {
+    public void setTradeAmont(long tradeAmont) {
         this.tradeAmont = tradeAmont;
     }
 
