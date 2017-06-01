@@ -1,6 +1,8 @@
 package com.stream.util;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.parser.ParserConfig;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -42,6 +44,7 @@ public class HttpClientNewSender {
     private static int HTTPCLIENT_CONNECT_TIMEOUT = 10*1000;
     private static int HTTPCLIENT_SOCKET_TIMEOUT = 10*1000;
     private static String url = "http://192.168.45.142:9380/audit";
+    private static String jsonPrefix = "cn.com.bsfit.frms.obj.AuditObject";
 
     static {
         httpClientConnectionManager = new PoolingHttpClientConnectionManager();
@@ -103,8 +106,17 @@ public class HttpClientNewSender {
                 String send = (String) object;
                 is=new ByteArrayInputStream(send.getBytes());
             }else {
-                is = new ByteArrayInputStream(JSON.toJSONString(object).getBytes());
+                ParserConfig.getGlobalInstance().addAccept("cn.com.bsfit.frms.obj.");
+                String jsonString= JSON.toJSONString(object, SerializerFeature.WriteClassName, SerializerFeature.BrowserCompatible, SerializerFeature.DisableCircularReferenceDetect);
+                /*替换json之后的类名*/
+                String[] jsonStringArray = jsonString.split(",");
+                String[] jsonPrefixArray = jsonStringArray[0].split(":");
+                String classname = jsonPrefixArray[1].substring(1, jsonPrefixArray[1].length() - 1);
+
+                jsonString = jsonString.replace(classname, jsonPrefix);
+                is = new ByteArrayInputStream(jsonString.getBytes());
             }
+
             InputStreamEntity streamEntity= new InputStreamEntity(is);
             streamEntity.setContentType("application/json");
             httpPost.setEntity(streamEntity);
@@ -123,7 +135,7 @@ public class HttpClientNewSender {
                     }
                 }*/
                 jsonStr = EntityUtils.toString(httpEntity, "UTF-8");
-                logger.info(jsonStr);
+                logger.info("返回的结果为：" + jsonStr);
             }
         } catch (IOException e) {
             logger.error("处理请求异常", e);

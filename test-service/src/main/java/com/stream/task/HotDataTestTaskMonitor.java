@@ -10,7 +10,6 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -21,7 +20,7 @@ public class HotDataTestTaskMonitor implements ApplicationListener<ContextRefres
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private volatile boolean running =  Boolean.TRUE;
+    private volatile boolean running =  Boolean.FALSE;
 
 
     private String[] merchantUserId = new String[] { "M1000000000000000000","M1100000000000000000","M1200000000000000000" };
@@ -76,7 +75,7 @@ public class HotDataTestTaskMonitor implements ApplicationListener<ContextRefres
                 for (int i=0;i<day;i++){
                     try {
                         Event e = EventFactory.buildEvent();
-                        e.setTradeAmont(new BigDecimal(10));
+                        e.setTradeAmont(10L);
                         sum = sum + 10;
                         daysum = daysum+10;
                         e.setMerchantUserId(merchantUserId[merchantUserIdIndex]);
