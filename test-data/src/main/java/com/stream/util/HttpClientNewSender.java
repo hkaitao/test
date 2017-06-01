@@ -27,6 +27,8 @@ import org.springframework.stereotype.Service;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by alpha on 2017/5/26.
@@ -106,6 +108,12 @@ public class HttpClientNewSender {
                 String send = (String) object;
                 is=new ByteArrayInputStream(send.getBytes());
             }else {
+                if(!(object instanceof List)){
+                    List<Object> list = new ArrayList<Object>();
+                    list.add(object);
+                    object = list;
+                }
+
                 ParserConfig.getGlobalInstance().addAccept("cn.com.bsfit.frms.obj.");
                 String jsonString= JSON.toJSONString(object, SerializerFeature.WriteClassName, SerializerFeature.BrowserCompatible, SerializerFeature.DisableCircularReferenceDetect);
                 /*替换json之后的类名*/
