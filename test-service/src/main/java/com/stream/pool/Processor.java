@@ -23,6 +23,6 @@ public class Processor<T> implements Runnable{
 
     @Override
     public void run() {
-        hqSender.send(JSONObject.toJSONString(t));
+//        hqSender.send(JSONObject.toJSONString(t));
     }
 }

@@ -52,7 +52,7 @@ public class HqConfiguration {
     public HornetQConnectionFactory hornetQConnectionFactory(){
         long connectionTTL = 60000;
         int consumerWindowSize = 1048576;
-        Long clientFailureCheckPeriod =30000L;
+        Long clientFailureCheckPeriod = 30000L;
         HornetQConnectionFactory  cf ;
         HashMap<String, Object> map = new HashMap<>();
         map.put("host", "192.168.45.143");

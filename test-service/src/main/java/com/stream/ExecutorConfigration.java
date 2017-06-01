@@ -16,10 +16,10 @@ public class ExecutorConfigration {
     @Bean(name = "dataTaskExecutor")
     public ThreadPoolTaskExecutor dataTaskExecutor() {
         ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
-        threadPoolTaskExecutor .setCorePoolSize(400);
+        threadPoolTaskExecutor .setCorePoolSize(1);
         threadPoolTaskExecutor.setKeepAliveSeconds(200);
-        threadPoolTaskExecutor.setMaxPoolSize(800);
-        threadPoolTaskExecutor.setQueueCapacity(1000);
+        threadPoolTaskExecutor.setMaxPoolSize(5);
+        threadPoolTaskExecutor.setQueueCapacity(100);
         threadPoolTaskExecutor.setAwaitTerminationSeconds(60);
         threadPoolTaskExecutor.setRejectedExecutionHandler( new ThreadPoolExecutor.CallerRunsPolicy());
         threadPoolTaskExecutor.setWaitForTasksToCompleteOnShutdown(Boolean.TRUE);
