@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.BufferedInputStream;
@@ -43,6 +44,9 @@ public class RuleTest {
 
     @Autowired
     private HqSender hqSender;
+
+    @Autowired
+    private JmsTemplate jmsTemplate;
 
     @Autowired
     private HttpClientNewSender httpClientNewSender;
@@ -190,7 +194,7 @@ public class RuleTest {
         List<Event> eventList = parseExcel(dataPath);
         for(Event event : eventList){
             /*发送到流立方*/
-            hqSender.send(JSONObject.toJSONString(event));
+            hqSender.send(jmsTemplate,JSONObject.toJSONString(event));
         }
         return true;
     }

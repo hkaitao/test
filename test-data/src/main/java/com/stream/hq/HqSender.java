@@ -14,13 +14,10 @@ import javax.jms.*;
 public class HqSender {
 
     @Autowired
-    private JmsTemplate jmsTemplate;
-
-    @Autowired
     private Queue queue;
 
 
-    public void send(String json){
+    public void send(JmsTemplate jmsTemplate,String json){
         jmsTemplate.send(queue, new MessageCreator() {
             @Override
             public Message createMessage(Session session) throws JMSException {

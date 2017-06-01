@@ -39,6 +39,7 @@ public class HqConfiguration {
 
 
     @Bean(name="hornetQConnectionFactory")
+    @Primary
     public HornetQConnectionFactory hornetQConnectionFactory(){
         long connectionTTL = 60000;
         int consumerWindowSize = 1048576;
@@ -57,8 +58,7 @@ public class HqConfiguration {
     }
 
 
-    @Bean
-    @Primary
+    @Bean(name="cachedConnectionFactory")
     public CachingConnectionFactory cachedConnectionFactory(@Qualifier("hornetQConnectionFactory") ConnectionFactory factory) {
         CachingConnectionFactory cFactory = new CachingConnectionFactory();
         cFactory.setTargetConnectionFactory(factory);
@@ -77,9 +77,124 @@ public class HqConfiguration {
     }
 
 
-    @Bean
-    @Primary
+
+    @Bean(name="cachedConnectionFactory1")
+    public CachingConnectionFactory cachedConnectionFactory1(@Qualifier("hornetQConnectionFactory") ConnectionFactory factory) {
+        CachingConnectionFactory cFactory = new CachingConnectionFactory();
+        cFactory.setTargetConnectionFactory(factory);
+        cFactory.setReconnectOnException(true);
+        return cFactory;
+    }
+
+    @Bean(name="cachedConnectionFactory2")
+    public CachingConnectionFactory cachedConnectionFactory2(@Qualifier("hornetQConnectionFactory") ConnectionFactory factory) {
+        CachingConnectionFactory cFactory = new CachingConnectionFactory();
+        cFactory.setTargetConnectionFactory(factory);
+        cFactory.setReconnectOnException(true);
+        return cFactory;
+    }
+
+
+
+    @Bean(name="jmsTemplate")
     public JmsTemplate jmsTemplate(@Qualifier("cachedConnectionFactory") CachingConnectionFactory cFactory) {
+        JmsTemplate jmsTemplate = new JmsTemplate(cFactory);
+        jmsTemplate.setReceiveTimeout(200);
+        return jmsTemplate;
+    }
+
+
+    @Bean(name="jmsTemplate1")
+    public JmsTemplate jmsTemplate1(@Qualifier("cachedConnectionFactory1") CachingConnectionFactory cFactory) {
+        JmsTemplate jmsTemplate = new JmsTemplate(cFactory);
+        jmsTemplate.setReceiveTimeout(200);
+        return jmsTemplate;
+    }
+
+
+    @Bean(name="jmsTemplate2")
+    public JmsTemplate jmsTemplate2(@Qualifier("cachedConnectionFactory2") CachingConnectionFactory cFactory) {
+        JmsTemplate jmsTemplate = new JmsTemplate(cFactory);
+        jmsTemplate.setReceiveTimeout(200);
+        return jmsTemplate;
+    }
+
+
+
+    @Bean(name="cachedConnectionFactory3")
+    public CachingConnectionFactory cachedConnectionFactory3(@Qualifier("hornetQConnectionFactory") ConnectionFactory factory) {
+        CachingConnectionFactory cFactory = new CachingConnectionFactory();
+        cFactory.setTargetConnectionFactory(factory);
+        cFactory.setReconnectOnException(true);
+        return cFactory;
+    }
+
+    @Bean(name="jmsTemplate3")
+    public JmsTemplate jmsTemplate3(@Qualifier("cachedConnectionFactory3") CachingConnectionFactory cFactory) {
+        JmsTemplate jmsTemplate = new JmsTemplate(cFactory);
+        jmsTemplate.setReceiveTimeout(200);
+        return jmsTemplate;
+    }
+
+
+    @Bean(name="cachedConnectionFactory4")
+    public CachingConnectionFactory cachedConnectionFactory4(@Qualifier("hornetQConnectionFactory") ConnectionFactory factory) {
+        CachingConnectionFactory cFactory = new CachingConnectionFactory();
+        cFactory.setTargetConnectionFactory(factory);
+        cFactory.setReconnectOnException(true);
+        return cFactory;
+    }
+
+    @Bean(name="jmsTemplate4")
+    public JmsTemplate jmsTemplate4(@Qualifier("cachedConnectionFactory4") CachingConnectionFactory cFactory) {
+        JmsTemplate jmsTemplate = new JmsTemplate(cFactory);
+        jmsTemplate.setReceiveTimeout(200);
+        return jmsTemplate;
+    }
+
+
+    @Bean(name="cachedConnectionFactory5")
+    public CachingConnectionFactory cachedConnectionFactory5(@Qualifier("hornetQConnectionFactory") ConnectionFactory factory) {
+        CachingConnectionFactory cFactory = new CachingConnectionFactory();
+        cFactory.setTargetConnectionFactory(factory);
+        cFactory.setReconnectOnException(true);
+        return cFactory;
+    }
+
+    @Bean(name="jmsTemplate5")
+    public JmsTemplate jmsTemplate5(@Qualifier("cachedConnectionFactory5") CachingConnectionFactory cFactory) {
+        JmsTemplate jmsTemplate = new JmsTemplate(cFactory);
+        jmsTemplate.setReceiveTimeout(200);
+        return jmsTemplate;
+    }
+
+
+    @Bean(name="cachedConnectionFactory6")
+    public CachingConnectionFactory cachedConnectionFactory6(@Qualifier("hornetQConnectionFactory") ConnectionFactory factory) {
+        CachingConnectionFactory cFactory = new CachingConnectionFactory();
+        cFactory.setTargetConnectionFactory(factory);
+        cFactory.setReconnectOnException(true);
+        return cFactory;
+    }
+
+    @Bean(name="jmsTemplate6")
+    public JmsTemplate jmsTemplate6(@Qualifier("cachedConnectionFactory6") CachingConnectionFactory cFactory) {
+        JmsTemplate jmsTemplate = new JmsTemplate(cFactory);
+        jmsTemplate.setReceiveTimeout(200);
+        return jmsTemplate;
+    }
+
+
+    @Bean(name="cachedConnectionFactory7")
+    public CachingConnectionFactory cachedConnectionFactory7(@Qualifier("hornetQConnectionFactory") ConnectionFactory factory) {
+        CachingConnectionFactory cFactory = new CachingConnectionFactory();
+        cFactory.setTargetConnectionFactory(factory);
+        cFactory.setReconnectOnException(true);
+        return cFactory;
+    }
+
+    @Bean(name="jmsTemplate7")
+    public JmsTemplate jmsTemplate7(@Qualifier("cachedConnectionFactory7") CachingConnectionFactory cFactory) {
         JmsTemplate jmsTemplate = new JmsTemplate(cFactory);
         jmsTemplate.setReceiveTimeout(200);
         return jmsTemplate;
