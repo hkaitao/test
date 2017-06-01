@@ -20,7 +20,7 @@ public class HotDataTestTaskMonitor implements ApplicationListener<ContextRefres
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private volatile boolean running =  Boolean.FALSE;
+    private volatile boolean running =  Boolean.TRUE;
 
 
     private String[] merchantUserId = new String[] { "M1000000000000000000","M1100000000000000000","M1200000000000000000" };
