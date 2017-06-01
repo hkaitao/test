@@ -7,6 +7,7 @@ import com.stream.info.Event;
 import com.stream.util.HttpClientNewSender;
 import com.yjf.common.log.Logger;
 import com.yjf.common.log.LoggerFactory;
+import org.springframework.jms.core.JmsTemplate;
 
 /**
  * Created by Administrator on 2017/5/25.
@@ -19,14 +20,17 @@ public class Processor<T> implements Runnable{
 
     private HqSender hqSender;
 
-    public Processor(T t, HqSender hqSender) {
+    private JmsTemplate jmsTemplate;
+
+    public Processor(T t,JmsTemplate jmsTemplate, HqSender hqSender) {
         this.t = t;
+        this.jmsTemplate = jmsTemplate;
         this.hqSender = hqSender;
     }
 
     @Override
     public void run() {
 //        HttpClientNewSender.send(t);
-        hqSender.send(JSONObject.toJSONString(t));
+        hqSender.send(jmsTemplate,JSONObject.toJSONString(t));
     }
 }
