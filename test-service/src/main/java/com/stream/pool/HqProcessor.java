@@ -3,6 +3,7 @@ package com.stream.pool;
 import com.alibaba.fastjson.JSONObject;
 import com.stream.hq.HqProducer;
 import com.stream.hq.HqSender;
+import com.stream.util.HttpClientNewSender;
 import com.yjf.common.log.Logger;
 import com.yjf.common.log.LoggerFactory;
 
@@ -27,6 +28,7 @@ public class HqProcessor<T> implements Runnable{
     @Override
     public void run() {
         //请求风控
+        HttpClientNewSender.send(t);
         //发送HQ
         try {
             hqProducer.send(JSONObject.toJSONString(t));
