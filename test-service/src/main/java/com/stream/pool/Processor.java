@@ -24,8 +24,7 @@ public class Processor<T> implements Runnable{
 
     @Override
     public void run() {
-        HttpClientNewSender.send(t);
-        hqSender.send(JSONObject.toJSONString(t));
+//        HttpClientNewSender.send(t);
 //        hqSender.send(JSONObject.toJSONString(t));
     }
 }
