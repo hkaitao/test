@@ -1,5 +1,7 @@
 package com.stream.hq;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hornetq.jms.client.HornetQConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -12,6 +14,8 @@ import javax.jms.*;
  */
 @Service("hqProducer")
 public class HqProducer {
+
+    private static Log logger = LogFactory.getLog(HqProducer.class);
 
     @Autowired
     @Qualifier("hornetQConnectionFactory")
@@ -32,13 +36,13 @@ public class HqProducer {
             producer.send(session.createTextMessage(json));
         }catch(Exception e){
             e.printStackTrace();
-            System.out.println("发送消息出错");
+            logger.error("发送消息出错");
         }finally{
-            if(session != null){
-                session.close();
-            }
             if(producer!= null){
                 producer.close();
+            }
+            if(session != null){
+                session.close();
             }
             if (connection != null) {
                 connection.close();

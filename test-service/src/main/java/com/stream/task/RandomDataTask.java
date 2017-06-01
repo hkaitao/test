@@ -18,17 +18,19 @@ import org.springframework.stereotype.Service;
 @Service("randomDataTask")
 public class RandomDataTask extends AbstractPoolManagment<Event> {
 
-    @Autowired
-    private HqSender hqSender;
+
+/*    @Autowired
+    @Qualifier("hqProducer")
+    private HqProducer hqProducer;*/
 
     @Autowired
-    @Qualifier("hqProducer")
-    private HqProducer hqProducer;
+    @Qualifier("hqSender")
+    private HqSender hqSender;
 
 
     @Override
     public void exec(Event event) {
-        poolManagement.start(new HqProcessor<>(event,hqProducer));
+        poolManagement.start(new Processor<>(event,hqSender));
     }
 
 }
