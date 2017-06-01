@@ -24,13 +24,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by alpha on 2017/5/24.
@@ -76,6 +72,7 @@ public class RuleTest {
     @Test
     public void testRule1() throws IOException, ParseException {
         boolean result1 = sendToStreamData("rule1/发送到流立方的数据.xlsx");
+        logger.info("****************************开始验证规则1***********************************");
         boolean result2 = checkVerifiedData("rule1/验证数据.xlsx");
         Assert.assertTrue("规则1通过\n", result2 == true);
 
@@ -84,6 +81,7 @@ public class RuleTest {
     @Test
     public void testRule2() throws IOException, ParseException {
         boolean result1 = sendToStreamData("rule2/发送到流立方的数据.xlsx");
+        logger.info("****************************开始验证规则2***********************************");
         boolean result2 = checkVerifiedData("rule2/验证数据.xlsx");
         Assert.assertTrue("规则2通过\n", result2 == true);
 
@@ -92,6 +90,7 @@ public class RuleTest {
     @Test
     public void testRule3() throws IOException, ParseException {
         boolean result1 = sendToStreamData("rule3/发送到流立方的数据.xlsx");
+        logger.info("****************************开始验证规则3***********************************");
         boolean result2 = checkVerifiedData("rule3/验证数据.xlsx");
         Assert.assertTrue("规则3通过\n", result2 == true);
 
@@ -100,6 +99,7 @@ public class RuleTest {
     @Test
     public void testRule4() throws IOException, ParseException {
         boolean result1 = sendToStreamData("rule4/发送到流立方的数据.xlsx");
+        logger.info("****************************开始验证规则4***********************************");
         boolean result2 = checkVerifiedData("rule4/验证数据.xlsx");
         Assert.assertTrue("规则4通过\n", result2 == true);
 
@@ -108,6 +108,7 @@ public class RuleTest {
     @Test
     public void testRule5() throws IOException, ParseException {
         boolean result1 = sendToStreamData("rule5/发送到流立方的数据.xlsx");
+        logger.info("****************************开始验证规则5***********************************");
         boolean result2 = checkVerifiedData("rule5/验证数据.xlsx");
         Assert.assertTrue("规则5通过\n", result2 == true);
 
@@ -116,6 +117,7 @@ public class RuleTest {
     @Test
     public void testRule6() throws IOException, ParseException {
         boolean result1 = sendToStreamData("rule6/发送到流立方的数据.xlsx");
+        logger.info("****************************开始验证规则6***********************************");
         boolean result2 = checkVerifiedData("rule6/验证的数据.xlsx");
         Assert.assertTrue("规则6通过\n", result2 == true);
 
@@ -124,6 +126,7 @@ public class RuleTest {
     @Test
     public void testRule7() throws IOException, ParseException {
         boolean result1 = sendToStreamData("rule7/发送到流立方的数据.xlsx");
+        logger.info("****************************开始验证规则7***********************************");
         boolean result2 = checkVerifiedData("rule7/验证数据.xlsx");
         Assert.assertTrue("规则7通过\n", result2 == true);
 
@@ -132,6 +135,7 @@ public class RuleTest {
     @Test
     public void testRule8() throws IOException, ParseException {
         boolean result1 = sendToStreamData("rule8/发送到流立方的数据.xlsx");
+        logger.info("****************************开始验证规则8***********************************");
         boolean result2 = checkVerifiedData("rule8/验证数据.xlsx");
         Assert.assertTrue("规则8通过\n", result2 == true);
 
@@ -140,123 +144,12 @@ public class RuleTest {
     @Test
     public void testRule9() throws IOException, ParseException {
         boolean result1 = sendToStreamData("rule9/发送到流立方的数据.xlsx");
+        logger.info("****************************开始验证规则9***********************************");
         boolean result2 = checkVerifiedData("rule9/验证数据.xlsx");
         Assert.assertTrue("规则9通过\n", result2 == true);
 
     }
 
-    @Test
-    public void testRule() throws IOException, ParseException {
-       String jsonstr =
-               "    {\n" +
-               "        \"@type\": \"cn.com.bsfit.frms.obj.AuditResult\",\n" +
-               "        \"customization\": {\n" +
-               "            \"@type\": \"java.util.HashMap\"\n" +
-               "        },\n" +
-               "        \"items\": [],\n" +
-               "        \"notifyPolicy\": {\n" +
-               "            \"code\": \"NO\",\n" +
-               "            \"name\": \"无通知\",\n" +
-               "            \"priority\": 0\n" +
-               "        },\n" +
-               "        \"retCode\": \"200\",\n" +
-               "        \"risks\": [\n" +
-               "            {\n" +
-               "                \"comments\": \"\",\n" +
-               "                \"createTime\": \"2017-04-20 11:07:07\",\n" +
-               "                \"customization\": {\n" +
-               "                    \"@type\": \"java.util.HashMap\"\n" +
-               "                },\n" +
-               "                \"notifyPolicy\": {\n" +
-               "                    \"code\": \"NO\",\n" +
-               "                    \"name\": \"无通知\",\n" +
-               "                    \"priority\": 0\n" +
-               "                },\n" +
-               "                \"riskTypes\": [\n" +
-               "                    \"异常操作\"\n" +
-               "                ],\n" +
-               "                \"ruleName\": \"242 : 11111 : 用户注册时间为空测试\",\n" +
-               "                \"rulePackageName\": \"cs\",\n" +
-               "                \"score\": 45,\n" +
-               "                \"uuid\": \"e9c602d3-9992-4a77-95a2-1b204827dafa\",\n" +
-               "                \"verifyPolicy\": {\n" +
-               "                    \"code\": \"MARK\",\n" +
-               "                    \"failControl\": \"NO\",\n" +
-               "                    \"name\": \"标记交易\",\n" +
-               "                    \"priority\": 50,\n" +
-               "                    \"succControl\": \"NO\"\n" +
-               "                },\n" +
-               "                \"weight\": 1\n" +
-               "            },\n" +
-               "            {\n" +
-               "                \"comments\": \"\",\n" +
-               "                \"createTime\": \"2017-04-20 11:07:07\",\n" +
-               "                \"customization\": {\n" +
-               "                    \"@type\": \"java.util.HashMap\"\n" +
-               "                },\n" +
-               "                \"notifyPolicy\": {\n" +
-               "                    \"code\": \"NO\",\n" +
-               "                    \"name\": \"无通知\",\n" +
-               "                    \"priority\": 0\n" +
-               "                },\n" +
-               "                \"riskTypes\": [\n" +
-               "                    \"异常操作\"\n" +
-               "                ],\n" +
-               "                \"ruleName\": \"249 : 99999 : 用户首次交易成功测试\",\n" +
-               "                \"rulePackageName\": \"cs\",\n" +
-               "                \"score\": 80,\n" +
-               "                \"uuid\": \"e9c602d3-9992-4a77-95a2-1b204827dafa\",\n" +
-               "                \"verifyPolicy\": {\n" +
-               "                    \"code\": \"MARK\",\n" +
-               "                    \"failControl\": \"NO\",\n" +
-               "                    \"name\": \"标记交易\",\n" +
-               "                    \"priority\": 50,\n" +
-               "                    \"succControl\": \"NO\"\n" +
-               "                },\n" +
-               "                \"weight\": 1\n" +
-               "            },\n" +
-               "            {\n" +
-               "                \"comments\": \"\",\n" +
-               "                \"createTime\": \"2017-04-20 11:07:07\",\n" +
-               "                \"customization\": {\n" +
-               "                    \"@type\": \"java.util.HashMap\"\n" +
-               "                },\n" +
-               "                \"notifyPolicy\": {\n" +
-               "                    \"code\": \"NO\",\n" +
-               "                    \"name\": \"无通知\",\n" +
-               "                    \"priority\": 0\n" +
-               "                },\n" +
-               "                \"riskTypes\": [\n" +
-               "                    \"异常操作\"\n" +
-               "                ],\n" +
-               "                \"ruleName\": \"312 : gzxl : 规则训练测试专用\",\n" +
-               "                \"rulePackageName\": \"cs\",\n" +
-               "                \"score\": 66,\n" +
-               "                \"uuid\": \"e9c602d3-9992-4a77-95a2-1b204827dafa\",\n" +
-               "                \"verifyPolicy\": {\n" +
-               "                    \"code\": \"MARK\",\n" +
-               "                    \"failControl\": \"NO\",\n" +
-               "                    \"name\": \"标记交易\",\n" +
-               "                    \"priority\": 50,\n" +
-               "                    \"succControl\": \"NO\"\n" +
-               "                },\n" +
-               "                \"weight\": 1\n" +
-               "            }\n" +
-               "        ],\n" +
-               "        \"score\": 66,\n" +
-               "        \"uuid\": \"e9c602d3-9992-4a77-95a2-1b204827dafa\",\n" +
-               "        \"verifyPolicy\": {\n" +
-               "            \"code\": \"MARK\",\n" +
-               "            \"failControl\": \"NO\",\n" +
-               "            \"name\": \"标记交易\",\n" +
-               "            \"priority\": 50,\n" +
-               "            \"succControl\": \"NO\"\n" +
-               "        }\n" +
-               "    }\n";
-        JSONObject jsonArray = JSON.parseObject(jsonstr);
-        System.out.println(jsonArray.get("notifyPolicy"));
-
-    }
 
     public boolean sendToStreamData(String dataPath) throws IOException, ParseException {
         List<Event> eventList = parseExcel(dataPath);
@@ -269,39 +162,68 @@ public class RuleTest {
 
     public boolean checkVerifiedData(String dataPath) throws IOException, ParseException {
         List<Event> eventList = parseExcel(dataPath);
-        int flag = 0;
+
         for(Event event : eventList){
-            /*验证每次调用的结果是否和预先设置的一致*/
-            flag++;
-            String jsonstr = HttpClientNewSender.send(event);
-            JSONObject jsonObject = JSON.parseObject(jsonstr);
-            String ruleName = (String) jsonObject.get("ruleName");
-
-            if(event.getExtraData().equals("notTriggered")){
-                /*不应该触发而触发了数据，说明错误了*/
-                if(StringUtils.isBlank(ruleName)){
-                    continue;
-                }else{
-                    logger.error(String.format("验证文件:%s，不该触发规则，却触发了规则，第%s条数据", dataPath, flag));
-                    return false;
-                }
+            if(checkDataOnebyOne(event)){
+                continue;
             }else{
-                if(StringUtils.isBlank(ruleName)){
-                    /*改触发规则，不触发，也错误*/
-                    logger.error(String.format("验证文件:%s，该触发规则，却不触发了规则，第%s条数据", dataPath, flag));
-                    return false;
-                }
-
-                String[] ruleNamePropertis = ruleName.split(":");
-                if(event.getExtraData().equalsIgnoreCase(ruleNamePropertis[1].trim())){
-                    continue;
-                }else{
-                    logger.error(String.format("验证文件:%s，规则触发错误，第%s条数据，触发的规则", dataPath, flag, ruleName));
-                    return false;
-                }
+                return false;
             }
         }
         return true;
+    }
+
+    public boolean checkDataOnebyOne(Event event){
+        List<Event> events = new ArrayList<Event>();
+        events.add(event);
+        String responseJson = HttpClientNewSender.send(events);
+        JSONArray jsonArray = JSON.parseArray(responseJson);
+        Map<String,List<String>> ruleNames = new HashMap<String,List<String>>();
+
+        if(jsonArray != null){
+            Iterator iterator = jsonArray.iterator();
+
+            while(iterator.hasNext()){
+                /*验证每次调用的结果是否和预先设置的一致*/
+                Map jsonmap = (Map) iterator.next();
+                JSONArray jsonArray1 = (JSONArray) jsonmap.get("risks");
+                Iterator mapIetetator = jsonArray1.iterator();
+
+                while (mapIetetator.hasNext()){
+                    Map ruleMap = (Map) mapIetetator.next();
+                    String ruleName = (String) ruleMap.get("ruleName");
+                    String uuid = (String) ruleMap.get("uuid");
+
+                    List<String> ruleNameLsit = ruleNames.get(uuid);
+
+                    if(ruleNameLsit != null){
+                        ruleNameLsit.add(ruleName);
+                    }else{
+                        ruleNameLsit = new ArrayList<String>();
+                        ruleNameLsit.add(ruleName);
+                    }
+
+                }
+            }
+        }
+
+        for(Map.Entry entry : ruleNames.entrySet()) {
+            /*验证每次调用的结果是否和预先设置的一致*/
+            List<String> ruleDescriptions = (List<String>) entry.getValue();
+
+            for (String ruleDescription : ruleDescriptions) {
+                String[] ruleInfos = ruleDescription.split(":");
+                String ruleCode = ruleInfos[1];
+
+                if(ruleCode != null && ruleCode.equalsIgnoreCase(event.getExtraData())){
+                    return true;
+                }else{
+                    continue;
+                }
+            }
+        }
+
+        return false;
     }
 
     public List<Event> parseExcel(String dataPath) throws IOException, ParseException {
@@ -336,8 +258,8 @@ public class RuleTest {
             }
 
             if(StringUtils.isNotBlank(rowValue[4])){
-                BigDecimal bigDecimal = new BigDecimal(rowValue[4]);
-                event.setTradeAmont(bigDecimal);
+                Long amount = Long.parseLong(rowValue[4]);
+                event.setTradeAmont(amount);
             }
 
             if(StringUtils.isNotBlank(rowValue[5])){
