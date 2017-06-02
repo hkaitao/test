@@ -14,6 +14,7 @@ public class TradeSender implements Sender{
     public Event send() {
         Event event = Buileder.buildEvent();
         event.setEvent("TRADE");
+        event.setBizCode("TRADE");
         event.setDataBizType("FAST_PAY");
         event.setDirection("OUT");
         event.setCreateTime(new Date(SimsTime.getTime()));

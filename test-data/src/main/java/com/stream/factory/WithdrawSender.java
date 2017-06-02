@@ -14,6 +14,7 @@ public class WithdrawSender implements Sender{
     public Event send() {
         Event event = Buileder.bulidPayEvent();
         event.setEvent("WITHDRAW");
+        event.setBizCode("WITHDRAW");
         event.setDataBizType("WITHDRAW_SINGLE");
         event.setDirection("OUT");
         event.setCreateTime(new Date(SimsTime.getTime()));

@@ -15,6 +15,7 @@ public class DepositSender implements Sender{
     public Event send() {
         Event event = Buileder.bulidPayEvent();
         event.setEvent("DEPOSIT");
+        event.setBizCode("DEPOSIT");
         event.setDataBizType("DEDUCT");
         event.setDirection("IN");
         event.setCreateTime(new Date(SimsTime.getTime()));

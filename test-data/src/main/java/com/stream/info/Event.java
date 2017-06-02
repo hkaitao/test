@@ -52,6 +52,7 @@ public class Event {
 
     private String extraData;
 
+    @AttibuteName(name = "frms_biz_code")
     private String bizCode;
 
     public String getBizCode() {
