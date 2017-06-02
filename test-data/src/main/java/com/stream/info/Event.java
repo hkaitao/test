@@ -1,6 +1,9 @@
 package com.stream.info;
 
+import java.lang.reflect.Field;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by alpha on 2017/5/24.
@@ -13,24 +16,32 @@ public class Event {
 
     private String outBizNo;
 
+    @AttibuteName(name = "frms_user_id")
     private String userId;
 
+    @AttibuteName(name = "frms_trade_type")
     private String event;
 
+    @AttibuteName(name = "frms_pay_type")
     private String dataBizType;
 
+    @AttibuteName(name = "frms_trans_vol")
     private long tradeAmont;
 
+    @AttibuteName(name = "frms_money_direction")
     private String direction;
 
     private String counterPartyUserId;
 
+    @AttibuteName(name = "frms_customer_id")
     private String merchantUserId;
 
+    @AttibuteName(name = "frms_card_no")
     private String bankAccountNo;
 
     private String bankAccountNoDigest;
 
+    @AttibuteName(name = "frms_trans_time")
     private Date createTime;
 
     private Date finshedTime;
@@ -40,6 +51,16 @@ public class Event {
     private String dataOperateType;
 
     private String extraData;
+
+    private String bizCode;
+
+    public String getBizCode() {
+        return bizCode;
+    }
+
+    public void setBizCode(String bizCode) {
+        this.bizCode = bizCode;
+    }
 
     public String getExtraData() {
         return extraData;
@@ -177,6 +198,7 @@ public class Event {
         this.dataOperateType = dataOperateType;
     }
 
+
     @Override
     public String toString() {
         return "Event{" +
@@ -196,7 +218,29 @@ public class Event {
                 ", finshedTime=" + finshedTime +
                 ", dataDisposeSehedule='" + dataDisposeSehedule + '\'' +
                 ", dataOperateType='" + dataOperateType + '\'' +
+                ", extraData='" + extraData + '\'' +
+                ", bizCode='" + bizCode + '\'' +
                 '}';
     }
 
+    public Map toMap() throws IllegalAccessException {
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        Class clazz = this.getClass();
+        Field[] fields = clazz.getFields();
+
+        for(Field field : fields){
+            boolean isAnnotation = field.isAnnotationPresent(AttibuteName.class);
+            String value = (String) field.get(this);
+            if(isAnnotation){
+                AttibuteName attibuteName = field.getAnnotation(AttibuteName.class);
+                field.setAccessible(true);
+                map.put(attibuteName.name(), value);
+            }else{
+                map.put(field.getName(), value);
+            }
+        }
+
+        return map;
+    }
 }
