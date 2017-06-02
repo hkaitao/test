@@ -30,7 +30,13 @@ public class Processor<T> implements Runnable{
 
     @Override
     public void run() {
-//        HttpClientNewSender.send(t);
-        hqSender.send(jmsTemplate,JSONObject.toJSONString(t));
+        try {
+            HttpClientNewSender.send(t);
+            hqSender.send(jmsTemplate,JSONObject.toJSONString(t));
+        }catch (Exception e){
+            logger.error("业务处理失败");
+        }
+
+
     }
 }

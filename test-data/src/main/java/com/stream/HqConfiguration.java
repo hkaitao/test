@@ -185,7 +185,7 @@ public class HqConfiguration {
     }
 
 
-    @Bean(name="cachedConnectionFactory7")
+/*    @Bean(name="cachedConnectionFactory7")
     public CachingConnectionFactory cachedConnectionFactory7(@Qualifier("hornetQConnectionFactory") ConnectionFactory factory) {
         CachingConnectionFactory cFactory = new CachingConnectionFactory();
         cFactory.setTargetConnectionFactory(factory);
@@ -198,5 +198,5 @@ public class HqConfiguration {
         JmsTemplate jmsTemplate = new JmsTemplate(cFactory);
         jmsTemplate.setReceiveTimeout(200);
         return jmsTemplate;
-    }
+    }*/
 }

@@ -21,13 +21,13 @@ public class TaskMonitor  implements ApplicationListener<ContextRefreshedEvent> 
     @Autowired
     private RandomDataTask randomDataTask;
 
-    private volatile boolean running = Boolean.FALSE;
+    private volatile boolean running = Boolean.TRUE;
 
-    private static final int threadMaxnum = 10;
+    private static final int threadMaxnum = 3;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        while (running) {
+        if (running) {
             for (int i =1 ;i<=threadMaxnum; i++){
                 Thread thread = new Thread(new TaskWorker());
                 thread.setName("task-monitor" + i);
@@ -35,7 +35,6 @@ public class TaskMonitor  implements ApplicationListener<ContextRefreshedEvent> 
                 thread.start();
             }
         }
-
     }
 
     private class TaskWorker implements Runnable {
