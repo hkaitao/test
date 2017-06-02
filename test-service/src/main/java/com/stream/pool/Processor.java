@@ -9,6 +9,9 @@ import com.yjf.common.log.Logger;
 import com.yjf.common.log.LoggerFactory;
 import org.springframework.jms.core.JmsTemplate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Administrator on 2017/5/25.
  */
@@ -39,7 +42,9 @@ public class Processor<T> implements Runnable{
             logger.error("调用风控业务处理失败",e);
         }
         try {
-            hqSender.send(jmsTemplate,JSONObject.toJSONString(t));
+            List list = new ArrayList<>();
+            list.add(t);
+            hqSender.send(jmsTemplate,JSONObject.toJSONString(list));
         }catch (Exception e){
             logger.error("发送队列业务处理失败",e);
         }
