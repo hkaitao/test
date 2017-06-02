@@ -231,7 +231,7 @@ public class Event {
 
         for(Field field : fields){
             boolean isAnnotation = field.isAnnotationPresent(AttibuteName.class);
-            String value = (String) field.get(this);
+            String value = String.valueOf(field.get(this));
             if(isAnnotation){
                 AttibuteName attibuteName = field.getAnnotation(AttibuteName.class);
                 field.setAccessible(true);

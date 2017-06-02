@@ -30,11 +30,18 @@ public class Processor<T> implements Runnable{
 
     @Override
     public void run() {
+        logger.info("发送数据:{}",t.toString());
         try {
-            HttpClientNewSender.send(t);
+
+            HttpClientNewSender.send(((Event)t).toMap());
+
+        }catch (Exception e){
+            logger.error("调用风控业务处理失败",e);
+        }
+        try {
             hqSender.send(jmsTemplate,JSONObject.toJSONString(t));
         }catch (Exception e){
-            logger.error("业务处理失败");
+            logger.error("发送队列业务处理失败",e);
         }
 
 
