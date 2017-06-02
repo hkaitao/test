@@ -22,6 +22,7 @@ public class EventFactory {
 
     public static Event buildEvent(){
         Event e =  factoryList.get(getRandomNum(0,factoryList.size())).produce().send();
+        e.setTradeAmont(getRandomNum(1,999999));
         return e;
     }
 

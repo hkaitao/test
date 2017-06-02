@@ -20,6 +20,7 @@ public class Buileder {
         event.setCounterPartyUserId(partyUserId);
         event.setUserId(userId);
         event.setMerchantUserId(merchantUserId);
+        event.setDataDisposeSehedule("SUCCESSED");
         return event;
     }
 
@@ -35,6 +36,7 @@ public class Buileder {
         event.setBankAccountNo(bankCardAccount);
         event.setUserId(userId);
         event.setMerchantUserId(merchantUserId);
+        event.setDataDisposeSehedule("SUCCESSED");
         return event;
     }
 
