@@ -227,7 +227,7 @@ public class Event {
         Map<String, Object> map = new HashMap<String, Object>();
 
         Class clazz = this.getClass();
-        Field[] fields = clazz.getFields();
+        Field[] fields = clazz.getDeclaredFields();
 
         for(Field field : fields){
             boolean isAnnotation = field.isAnnotationPresent(AttibuteName.class);
