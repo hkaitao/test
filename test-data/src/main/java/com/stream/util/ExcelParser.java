@@ -21,7 +21,7 @@ import java.util.List;
 public class ExcelParser {
 
     private static Log logger = LogFactory.getLog(ExcelParser.class);
-    private static String[] HEADER_INFO = { "merchantUserId", "userId", "event", "bankAccountNo", "tradeAmont", "createTime", "dataDisposeSehedule", "verifiedData"};
+    private static String[] HEADER_INFO = { "merchantUserId", "userId", "event", "bankAccountNo", "tradeAmont", "createTime", "dataDisposeSehedule", "verifiedData", "bizCode"};
     private static SimpleDateFormat sdftime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public static List<Event> parseExcel(String dataPath, Class clazz) throws IOException, ParseException {
@@ -45,7 +45,6 @@ public class ExcelParser {
 
             if(StringUtils.isNotBlank(rowValue[2])){
                 event.setEvent(rowValue[2]);
-                event.setBizCode(rowValue[2]);
 
                 if(StringUtils.equals(rowValue[2], "DEPOSIT")){
                     event.setDataBizType("DEDUCT");
@@ -72,6 +71,10 @@ public class ExcelParser {
 
             if(StringUtils.isNotBlank(rowValue[7])){
                 event.setExtraData(rowValue[7]);
+            }
+
+            if(StringUtils.isNotBlank(rowValue[8])){
+                event.setBizCode(rowValue[8]);
             }
 
             eventList.add(event);
