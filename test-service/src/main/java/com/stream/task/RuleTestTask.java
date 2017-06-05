@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
@@ -25,6 +24,8 @@ public class RuleTestTask implements ApplicationListener<ContextRefreshedEvent>{
     @Autowired
     private RandomDataTask randomDataTask;
 
+    private boolean switchCase = false;
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         try {
@@ -38,15 +39,17 @@ public class RuleTestTask implements ApplicationListener<ContextRefreshedEvent>{
             Thread thread8 = new Thread(new TestTask(ExcelParser.parseExcel("rule8/rule8.xlsx", this.getClass())));
             Thread thread9 = new Thread(new TestTask(ExcelParser.parseExcel("rule9/rule9.xlsx", this.getClass())));
 
-            thread1.start();
-            thread2.start();
-            thread3.start();
-            thread4.start();
-            thread5.start();
-            thread6.start();
-            thread7.start();
-            thread8.start();
-            thread9.start();
+            if(switchCase) {
+                thread1.start();
+                thread2.start();
+                thread3.start();
+                thread4.start();
+                thread5.start();
+                thread6.start();
+                thread7.start();
+                thread8.start();
+                thread9.start();
+            }
         } catch (IOException e) {
             logger.error("解析excel文件出错", e);
         } catch (ParseException e) {

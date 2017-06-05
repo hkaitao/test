@@ -141,7 +141,7 @@ public class RuleTest {
     public void testRule6() throws IOException, ParseException, IllegalAccessException {
         boolean result1 = sendToStreamData("rule6/发送到流立方的数据.xlsx");
         logger.info("****************************开始验证规则6***********************************");
-        boolean result2 = checkVerifiedData("rule6/验证的数据.xlsx");
+        boolean result2 = checkVerifiedData("rule6/验证数据.xlsx");
         if(result2){
             logger.info("规则6验证通过");
         }else{
@@ -192,10 +192,11 @@ public class RuleTest {
 
     public boolean sendToStreamData(String dataPath) throws IOException, ParseException {
         List<Event> eventList = parseExcel(dataPath);
-        for(Event event : eventList){
-            /*发送到流立方*/
+        /*for(Event event : eventList){
+            *//*发送到流立方*//*
             hqSender.send(jmsTemplate,JSONObject.toJSONString(event));
-        }
+        }*/
+        hqSender.send(jmsTemplate,JSONObject.toJSONString(eventList));
         return true;
     }
 
@@ -216,6 +217,7 @@ public class RuleTest {
         /*List<Event> events = new ArrayList<Event>();
         events.add(event);*/
         String responseJson = HttpClientNewSender.send(event.toMap());
+        logger.info("规则验证返回结果为：" + responseJson);
         JSONArray jsonArray = JSON.parseArray(responseJson);
         Map<String,List<String>> ruleNames = new HashMap<String,List<String>>();
 
