@@ -108,7 +108,7 @@ public class RuleTest {
         String randomstr = RandomStringUtils.random(3);
         boolean result1 = sendToStreamData("rule3/发送到流立方的数据.xlsx", randomstr);
         logger.info("****************************开始验证规则3***********************************");
-        Thread.sleep(100);
+        Thread.sleep(3000);
         boolean result2 = checkVerifiedData("rule3/验证数据.xlsx", randomstr);
         if(result2){
             logger.info("规则3验证通过");
@@ -138,7 +138,7 @@ public class RuleTest {
         String randomstr = RandomStringUtils.random(3);
         boolean result1 = sendToStreamData("rule5/发送到流立方的数据.xlsx", randomstr);
         logger.info("****************************开始验证规则5***********************************");
-        Thread.sleep(100);
+        Thread.sleep(3000);
         boolean result2 = checkVerifiedData("rule5/验证数据.xlsx", randomstr);
         if(result2){
             logger.info("规则5验证通过");
@@ -183,7 +183,7 @@ public class RuleTest {
         String randomstr = RandomStringUtils.random(3);
         boolean result1 = sendToStreamData("rule8/发送到流立方的数据.xlsx", randomstr);
         logger.info("****************************开始验证规则8***********************************");
-        Thread.sleep(100);
+        Thread.sleep(3000);
         boolean result2 = checkVerifiedData("rule8/验证数据.xlsx", randomstr);
         if(result2){
             logger.info("规则8验证通过");
@@ -198,7 +198,7 @@ public class RuleTest {
         String randomstr = RandomStringUtils.random(3);
         boolean result1 = sendToStreamData("rule9/发送到流立方的数据.xlsx", randomstr);
         logger.info("****************************开始验证规则9***********************************");
-        Thread.sleep(100);
+        Thread.sleep(3000);
         boolean result2 = checkVerifiedData("rule9/验证数据.xlsx", randomstr);
         if(result2){
             logger.info("规则9验证通过");
@@ -311,7 +311,10 @@ public class RuleTest {
             if(StringUtils.isNotBlank(rowValue[2])){
                 event.setEvent(rowValue[2]);
                 if(StringUtils.equals(rowValue[2], "DEPOSIT")){
+                    event.setDirection("IN");
                     event.setDataBizType("DEDUCT");
+                }else if(StringUtils.equals(rowValue[2], "WITHDRAW")){
+                    event.setDirection("OUT");
                 }
             }
 
