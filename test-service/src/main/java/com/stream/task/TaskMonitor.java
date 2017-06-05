@@ -21,7 +21,7 @@ public class TaskMonitor  implements ApplicationListener<ContextRefreshedEvent> 
     @Autowired
     private RandomDataTask randomDataTask;
 
-    private volatile boolean running = Boolean.TRUE;
+    private volatile boolean running = Boolean.FALSE;
 
     private static final int threadMaxnum = 3;
 
@@ -41,11 +41,14 @@ public class TaskMonitor  implements ApplicationListener<ContextRefreshedEvent> 
 
         @Override
         public void run() {
-            try {
-                randomDataTask.exec(EventFactory.buildEvent());
-            } catch (Throwable throwable) {
-                logger.error("出现意外错误",throwable);
+            while (true){
+                try {
+                    randomDataTask.exec(EventFactory.buildEvent());
+                } catch (Throwable throwable) {
+                    logger.error("出现意外错误",throwable);
+                }
             }
+
         }
 
     }

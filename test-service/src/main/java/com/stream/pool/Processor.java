@@ -33,18 +33,17 @@ public class Processor<T> implements Runnable{
 
     @Override
     public void run() {
-        logger.info("发送数据:{}",t.toString());
         try {
-
             HttpClientNewSender.send(((Event)t).toMap());
-
         }catch (Exception e){
             logger.error("调用风控业务处理失败",e);
         }
         try {
             List list = new ArrayList<>();
             list.add(t);
-            hqSender.send(jmsTemplate,JSONObject.toJSONString(list));
+            String json = JSONObject.toJSONString(list);
+            logger.info("发送数据:{}",json);
+            hqSender.send(jmsTemplate,json);
         }catch (Exception e){
             logger.error("发送队列业务处理失败",e);
         }
