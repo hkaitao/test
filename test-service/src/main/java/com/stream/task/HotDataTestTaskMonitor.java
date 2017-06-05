@@ -35,7 +35,24 @@ public class HotDataTestTaskMonitor implements ApplicationListener<ContextRefres
             thread0.setName("task-monitor" + 0);
             thread0.setDaemon(true);
             thread0.start()*/;
-            Thread thread0 = new Thread(new TaskWorker(10,100000,0));
+
+            Thread thread0 = new Thread(new TaskWorker(10,10000,0));
+            thread0.setName("task-monitor" + 0);
+            thread0.setDaemon(true);
+            thread0.start();
+
+            Thread thread1 = new Thread(new TaskWorker(10,10001,1));
+            thread1.setName("task-monitor" + 1);
+            thread1.setDaemon(true);
+            thread1.start();
+
+            Thread thread2 = new Thread(new TaskWorker(11,9091,2));
+            thread2.setName("task-monitor" + 2);
+            thread2.setDaemon(true);
+            thread2.start();
+
+
+            /*Thread thread0 = new Thread(new TaskWorker(10,100000,0));
             thread0.setName("task-monitor" + 0);
             thread0.setDaemon(true);
             thread0.start();
@@ -48,7 +65,7 @@ public class HotDataTestTaskMonitor implements ApplicationListener<ContextRefres
             Thread thread2 = new Thread(new TaskWorker(11,90910,2));
             thread2.setName("task-monitor" + 2);
             thread2.setDaemon(true);
-            thread2.start();
+            thread2.start();*/
         }
     }
 

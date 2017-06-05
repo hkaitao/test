@@ -28,12 +28,12 @@ public class HqProcessor<T> implements Runnable{
     @Override
     public void run() {
         //请求风控
-        HttpClientNewSender.send(t);
+//        HttpClientNewSender.send(t);
         //发送HQ
-        try {
+/*        try {
             hqProducer.send(JSONObject.toJSONString(t));
         } catch (JMSException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }

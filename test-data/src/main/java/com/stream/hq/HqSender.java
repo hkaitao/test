@@ -1,5 +1,7 @@
 package com.stream.hq;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
@@ -13,11 +15,14 @@ import javax.jms.*;
 @Service("hqSender")
 public class HqSender {
 
+    private static Log logger = LogFactory.getLog(HqSender.class);
+
     @Autowired
     private Queue queue;
 
 
     public void send(JmsTemplate jmsTemplate,String json){
+
         jmsTemplate.send(queue, new MessageCreator() {
             @Override
             public Message createMessage(Session session) throws JMSException {
