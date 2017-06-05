@@ -3,6 +3,7 @@ package com.stream.util;
 import com.stream.info.Event;
 import com.yjf.common.component.ExcelReadGenerator;
 import com.yjf.common.component.impl.ExcelReadGeneratorImpl;
+import com.yjf.common.util.RandomStringUtils;
 import com.yjf.common.util.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -30,17 +31,19 @@ public class ExcelParser {
         ExcelReadGenerator excelReadGenerator = new ExcelReadGeneratorImpl(0, HEADER_INFO.length,
                 bufferedInputStream, isExcel2003(dataPath));
         List<Event> eventList = new ArrayList<Event>();
+        String randomstr = RandomStringUtils.random(3);
+
         excelReadGenerator.nextRowValue();
 
         for (int i = 0; i < excelReadGenerator.totalRowNum(); i++) {
             String[] rowValue = excelReadGenerator.nextRowValue();
             Event event = Buileder.buildEvent();
             if(StringUtils.isNotBlank(rowValue[0])){
-                event.setMerchantUserId(rowValue[0]);
+                event.setMerchantUserId(rowValue[0] + randomstr);
             }
 
             if(StringUtils.isNotBlank(rowValue[1])){
-                event.setUserId(rowValue[1]);
+                event.setUserId(rowValue[1] + randomstr);
             }
 
             if(StringUtils.isNotBlank(rowValue[2])){
@@ -52,7 +55,7 @@ public class ExcelParser {
             }
 
             if(StringUtils.isNotBlank(rowValue[3])){
-                event.setBankAccountNo(rowValue[3]);
+                event.setBankAccountNo(rowValue[3] + randomstr);
             }
 
             if(StringUtils.isNotBlank(rowValue[4])){

@@ -9,6 +9,7 @@ import com.stream.util.Buileder;
 import com.stream.util.HttpClientNewSender;
 import com.yjf.common.component.ExcelReadGenerator;
 import com.yjf.common.component.impl.ExcelReadGeneratorImpl;
+import com.yjf.common.util.RandomStringUtils;
 import com.yjf.common.util.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -73,10 +74,12 @@ public class RuleTest {
     }
 
     @Test
-    public void testRule1() throws IOException, ParseException, IllegalAccessException {
-        boolean result1 = sendToStreamData("rule1/发送到流立方的数据.xlsx");
+    public void testRule1() throws IOException, ParseException, IllegalAccessException, InterruptedException {
+        String randomstr = RandomStringUtils.random(3);
+        boolean result1 = sendToStreamData("rule1/发送到流立方的数据.xlsx", randomstr);
         logger.info("****************************开始验证规则1***********************************");
-        boolean result2 = checkVerifiedData("rule1/验证数据.xlsx");
+        Thread.sleep(100);
+        boolean result2 = checkVerifiedData("rule1/验证数据.xlsx", randomstr);
         if(result2){
             logger.info("规则1验证通过");
         }else{
@@ -86,10 +89,12 @@ public class RuleTest {
     }
 
     @Test
-    public void testRule2() throws IOException, ParseException, IllegalAccessException {
-        boolean result1 = sendToStreamData("rule2/发送到流立方的数据.xlsx");
+    public void testRule2() throws IOException, ParseException, IllegalAccessException, InterruptedException {
+        String randomstr = RandomStringUtils.random(3);
+        boolean result1 = sendToStreamData("rule2/发送到流立方的数据.xlsx", randomstr);
         logger.info("****************************开始验证规则2***********************************");
-        boolean result2 = checkVerifiedData("rule2/验证数据.xlsx");
+        Thread.sleep(100);
+        boolean result2 = checkVerifiedData("rule2/验证数据.xlsx", randomstr);
         if(result2){
             logger.info("规则2验证通过");
         }else{
@@ -99,10 +104,12 @@ public class RuleTest {
     }
 
     @Test
-    public void testRule3() throws IOException, ParseException, IllegalAccessException {
-        boolean result1 = sendToStreamData("rule3/发送到流立方的数据.xlsx");
+    public void testRule3() throws IOException, ParseException, IllegalAccessException, InterruptedException {
+        String randomstr = RandomStringUtils.random(3);
+        boolean result1 = sendToStreamData("rule3/发送到流立方的数据.xlsx", randomstr);
         logger.info("****************************开始验证规则3***********************************");
-        boolean result2 = checkVerifiedData("rule3/验证数据.xlsx");
+        Thread.sleep(100);
+        boolean result2 = checkVerifiedData("rule3/验证数据.xlsx", randomstr);
         if(result2){
             logger.info("规则3验证通过");
         }else{
@@ -112,10 +119,12 @@ public class RuleTest {
     }
 
     @Test
-    public void testRule4() throws IOException, ParseException, IllegalAccessException {
-        boolean result1 = sendToStreamData("rule4/发送到流立方的数据.xlsx");
+    public void testRule4() throws IOException, ParseException, IllegalAccessException, InterruptedException {
+        String randomstr = RandomStringUtils.random(3);
+        boolean result1 = sendToStreamData("rule4/发送到流立方的数据.xlsx", randomstr);
         logger.info("****************************开始验证规则4***********************************");
-        boolean result2 = checkVerifiedData("rule4/验证数据.xlsx");
+        Thread.sleep(100);
+        boolean result2 = checkVerifiedData("rule4/验证数据.xlsx", randomstr);
         if(result2){
             logger.info("规则4验证通过");
         }else{
@@ -125,10 +134,12 @@ public class RuleTest {
     }
 
     @Test
-    public void testRule5() throws IOException, ParseException, IllegalAccessException {
-        boolean result1 = sendToStreamData("rule5/发送到流立方的数据.xlsx");
+    public void testRule5() throws IOException, ParseException, IllegalAccessException, InterruptedException {
+        String randomstr = RandomStringUtils.random(3);
+        boolean result1 = sendToStreamData("rule5/发送到流立方的数据.xlsx", randomstr);
         logger.info("****************************开始验证规则5***********************************");
-        boolean result2 = checkVerifiedData("rule5/验证数据.xlsx");
+        Thread.sleep(100);
+        boolean result2 = checkVerifiedData("rule5/验证数据.xlsx", randomstr);
         if(result2){
             logger.info("规则5验证通过");
         }else{
@@ -138,10 +149,12 @@ public class RuleTest {
     }
 
     @Test
-    public void testRule6() throws IOException, ParseException, IllegalAccessException {
-        boolean result1 = sendToStreamData("rule6/发送到流立方的数据.xlsx");
+    public void testRule6() throws IOException, ParseException, IllegalAccessException, InterruptedException {
+        String randomstr = RandomStringUtils.random(3);
+        boolean result1 = sendToStreamData("rule6/发送到流立方的数据.xlsx", randomstr);
         logger.info("****************************开始验证规则6***********************************");
-        boolean result2 = checkVerifiedData("rule6/验证数据.xlsx");
+        Thread.sleep(100);
+        boolean result2 = checkVerifiedData("rule6/验证数据.xlsx", randomstr);
         if(result2){
             logger.info("规则6验证通过");
         }else{
@@ -151,10 +164,12 @@ public class RuleTest {
     }
 
     @Test
-    public void testRule7() throws IOException, ParseException, IllegalAccessException {
-        boolean result1 = sendToStreamData("rule7/发送到流立方的数据.xlsx");
+    public void testRule7() throws IOException, ParseException, IllegalAccessException, InterruptedException {
+        String randomstr = RandomStringUtils.random(3);
+        boolean result1 = sendToStreamData("rule7/发送到流立方的数据.xlsx", randomstr);
         logger.info("****************************开始验证规则7***********************************");
-        boolean result2 = checkVerifiedData("rule7/验证数据.xlsx");
+        Thread.sleep(100);
+        boolean result2 = checkVerifiedData("rule7/验证数据.xlsx", randomstr);
         if(result2){
             logger.info("规则7验证通过");
         }else{
@@ -164,10 +179,12 @@ public class RuleTest {
     }
 
     @Test
-    public void testRule8() throws IOException, ParseException, IllegalAccessException {
-        boolean result1 = sendToStreamData("rule8/发送到流立方的数据.xlsx");
+    public void testRule8() throws IOException, ParseException, IllegalAccessException, InterruptedException {
+        String randomstr = RandomStringUtils.random(3);
+        boolean result1 = sendToStreamData("rule8/发送到流立方的数据.xlsx", randomstr);
         logger.info("****************************开始验证规则8***********************************");
-        boolean result2 = checkVerifiedData("rule8/验证数据.xlsx");
+        Thread.sleep(100);
+        boolean result2 = checkVerifiedData("rule8/验证数据.xlsx", randomstr);
         if(result2){
             logger.info("规则8验证通过");
         }else{
@@ -177,10 +194,12 @@ public class RuleTest {
     }
 
     @Test
-    public void testRule9() throws IOException, ParseException, IllegalAccessException {
-        boolean result1 = sendToStreamData("rule9/发送到流立方的数据.xlsx");
+    public void testRule9() throws IOException, ParseException, IllegalAccessException, InterruptedException {
+        String randomstr = RandomStringUtils.random(3);
+        boolean result1 = sendToStreamData("rule9/发送到流立方的数据.xlsx", randomstr);
         logger.info("****************************开始验证规则9***********************************");
-        boolean result2 = checkVerifiedData("rule9/验证数据.xlsx");
+        Thread.sleep(100);
+        boolean result2 = checkVerifiedData("rule9/验证数据.xlsx", randomstr);
         if(result2){
             logger.info("规则9验证通过");
         }else{
@@ -190,8 +209,8 @@ public class RuleTest {
     }
 
 
-    public boolean sendToStreamData(String dataPath) throws IOException, ParseException {
-        List<Event> eventList = parseExcel(dataPath);
+    public boolean sendToStreamData(String dataPath, String randomstr) throws IOException, ParseException {
+        List<Event> eventList = parseExcel(dataPath, randomstr);
         /*for(Event event : eventList){
             *//*发送到流立方*//*
             hqSender.send(jmsTemplate,JSONObject.toJSONString(event));
@@ -200,8 +219,8 @@ public class RuleTest {
         return true;
     }
 
-    public boolean checkVerifiedData(String dataPath) throws IOException, ParseException, IllegalAccessException {
-        List<Event> eventList = parseExcel(dataPath);
+    public boolean checkVerifiedData(String dataPath, String randomstr) throws IOException, ParseException, IllegalAccessException {
+        List<Event> eventList = parseExcel(dataPath, randomstr);
 
         for(Event event : eventList){
             if(checkDataOnebyOne(event)){
@@ -244,6 +263,7 @@ public class RuleTest {
                         } else {
                             ruleNameLsit = new ArrayList<String>();
                             ruleNameLsit.add(ruleName);
+                            ruleNames.put(uuid, ruleNameLsit);
                         }
                     }
                 }
@@ -258,7 +278,7 @@ public class RuleTest {
                 String[] ruleInfos = ruleDescription.split(":");
                 String ruleCode = ruleInfos[1];
 
-                if(ruleCode != null && ruleCode.equalsIgnoreCase(event.getExtraData())){
+                if(ruleCode != null && ruleCode.trim().equalsIgnoreCase(event.getExtraData())){
                     return true;
                 }else{
                     continue;
@@ -269,7 +289,7 @@ public class RuleTest {
         return false;
     }
 
-    public List<Event> parseExcel(String dataPath) throws IOException, ParseException {
+    public List<Event> parseExcel(String dataPath, String randomstr) throws IOException, ParseException {
         ClassLoader classLoader = this.getClass().getClassLoader();
         BufferedInputStream bufferedInputStream = (BufferedInputStream) classLoader.getResourceAsStream(dataPath);
         ExcelReadGenerator excelReadGenerator = new ExcelReadGeneratorImpl(0, HEADER_INFO.length,
@@ -281,11 +301,11 @@ public class RuleTest {
             String[] rowValue = excelReadGenerator.nextRowValue();
             Event event = Buileder.buildEvent();
             if(StringUtils.isNotBlank(rowValue[0])){
-                event.setMerchantUserId(rowValue[0]);
+                event.setMerchantUserId(rowValue[0] + randomstr);
             }
 
             if(StringUtils.isNotBlank(rowValue[1])){
-                event.setUserId(rowValue[1]);
+                event.setUserId(rowValue[1] + randomstr);
             }
 
             if(StringUtils.isNotBlank(rowValue[2])){
@@ -296,7 +316,7 @@ public class RuleTest {
             }
 
             if(StringUtils.isNotBlank(rowValue[3])){
-                event.setBankAccountNo(rowValue[3]);
+                event.setBankAccountNo(rowValue[3] + randomstr);
             }
 
             if(StringUtils.isNotBlank(rowValue[4])){
