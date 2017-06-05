@@ -38,7 +38,7 @@ import java.util.*;
 public class RuleTest {
 
     private Log logger = LogFactory.getLog(this.getClass());
-    private String[] HEADER_INFO = { "merchantUserId", "userId", "event", "bankAccountNo", "tradeAmont", "createTime", "dataDisposeSehedule", "verifiedData"};
+    private String[] HEADER_INFO = { "merchantUserId", "userId", "event", "bankAccountNo", "tradeAmont", "createTime", "dataDisposeSehedule", "verifiedData", "bizCode"};
     private SimpleDateFormat sdftime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private static final String PROFILE = "stest";
 
@@ -73,7 +73,7 @@ public class RuleTest {
     }
 
     @Test
-    public void testRule1() throws IOException, ParseException {
+    public void testRule1() throws IOException, ParseException, IllegalAccessException {
         boolean result1 = sendToStreamData("rule1/发送到流立方的数据.xlsx");
         logger.info("****************************开始验证规则1***********************************");
         boolean result2 = checkVerifiedData("rule1/验证数据.xlsx");
@@ -86,7 +86,7 @@ public class RuleTest {
     }
 
     @Test
-    public void testRule2() throws IOException, ParseException {
+    public void testRule2() throws IOException, ParseException, IllegalAccessException {
         boolean result1 = sendToStreamData("rule2/发送到流立方的数据.xlsx");
         logger.info("****************************开始验证规则2***********************************");
         boolean result2 = checkVerifiedData("rule2/验证数据.xlsx");
@@ -99,7 +99,7 @@ public class RuleTest {
     }
 
     @Test
-    public void testRule3() throws IOException, ParseException {
+    public void testRule3() throws IOException, ParseException, IllegalAccessException {
         boolean result1 = sendToStreamData("rule3/发送到流立方的数据.xlsx");
         logger.info("****************************开始验证规则3***********************************");
         boolean result2 = checkVerifiedData("rule3/验证数据.xlsx");
@@ -112,7 +112,7 @@ public class RuleTest {
     }
 
     @Test
-    public void testRule4() throws IOException, ParseException {
+    public void testRule4() throws IOException, ParseException, IllegalAccessException {
         boolean result1 = sendToStreamData("rule4/发送到流立方的数据.xlsx");
         logger.info("****************************开始验证规则4***********************************");
         boolean result2 = checkVerifiedData("rule4/验证数据.xlsx");
@@ -125,7 +125,7 @@ public class RuleTest {
     }
 
     @Test
-    public void testRule5() throws IOException, ParseException {
+    public void testRule5() throws IOException, ParseException, IllegalAccessException {
         boolean result1 = sendToStreamData("rule5/发送到流立方的数据.xlsx");
         logger.info("****************************开始验证规则5***********************************");
         boolean result2 = checkVerifiedData("rule5/验证数据.xlsx");
@@ -138,7 +138,7 @@ public class RuleTest {
     }
 
     @Test
-    public void testRule6() throws IOException, ParseException {
+    public void testRule6() throws IOException, ParseException, IllegalAccessException {
         boolean result1 = sendToStreamData("rule6/发送到流立方的数据.xlsx");
         logger.info("****************************开始验证规则6***********************************");
         boolean result2 = checkVerifiedData("rule6/验证的数据.xlsx");
@@ -151,7 +151,7 @@ public class RuleTest {
     }
 
     @Test
-    public void testRule7() throws IOException, ParseException {
+    public void testRule7() throws IOException, ParseException, IllegalAccessException {
         boolean result1 = sendToStreamData("rule7/发送到流立方的数据.xlsx");
         logger.info("****************************开始验证规则7***********************************");
         boolean result2 = checkVerifiedData("rule7/验证数据.xlsx");
@@ -164,7 +164,7 @@ public class RuleTest {
     }
 
     @Test
-    public void testRule8() throws IOException, ParseException {
+    public void testRule8() throws IOException, ParseException, IllegalAccessException {
         boolean result1 = sendToStreamData("rule8/发送到流立方的数据.xlsx");
         logger.info("****************************开始验证规则8***********************************");
         boolean result2 = checkVerifiedData("rule8/验证数据.xlsx");
@@ -177,7 +177,7 @@ public class RuleTest {
     }
 
     @Test
-    public void testRule9() throws IOException, ParseException {
+    public void testRule9() throws IOException, ParseException, IllegalAccessException {
         boolean result1 = sendToStreamData("rule9/发送到流立方的数据.xlsx");
         logger.info("****************************开始验证规则9***********************************");
         boolean result2 = checkVerifiedData("rule9/验证数据.xlsx");
@@ -199,7 +199,7 @@ public class RuleTest {
         return true;
     }
 
-    public boolean checkVerifiedData(String dataPath) throws IOException, ParseException {
+    public boolean checkVerifiedData(String dataPath) throws IOException, ParseException, IllegalAccessException {
         List<Event> eventList = parseExcel(dataPath);
 
         for(Event event : eventList){
@@ -212,10 +212,10 @@ public class RuleTest {
         return true;
     }
 
-    public boolean checkDataOnebyOne(Event event){
+    public boolean checkDataOnebyOne(Event event) throws IllegalAccessException {
         /*List<Event> events = new ArrayList<Event>();
         events.add(event);*/
-        String responseJson = HttpClientNewSender.send(event);
+        String responseJson = HttpClientNewSender.send(event.toMap());
         JSONArray jsonArray = JSON.parseArray(responseJson);
         Map<String,List<String>> ruleNames = new HashMap<String,List<String>>();
 
@@ -288,7 +288,6 @@ public class RuleTest {
 
             if(StringUtils.isNotBlank(rowValue[2])){
                 event.setEvent(rowValue[2]);
-
                 if(StringUtils.equals(rowValue[2], "DEPOSIT")){
                     event.setDataBizType("DEDUCT");
                 }
@@ -314,6 +313,10 @@ public class RuleTest {
 
             if(StringUtils.isNotBlank(rowValue[7])){
                 event.setExtraData(rowValue[7]);
+            }
+
+            if(StringUtils.isNotBlank(rowValue[8])){
+                event.setBizCode(rowValue[8]);
             }
 
             eventList.add(event);
