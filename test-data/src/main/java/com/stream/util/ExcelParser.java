@@ -50,7 +50,10 @@ public class ExcelParser {
                 event.setEvent(rowValue[2]);
 
                 if(StringUtils.equals(rowValue[2], "DEPOSIT")){
+                    event.setDirection("IN");
                     event.setDataBizType("DEDUCT");
+                }else if(StringUtils.equals(rowValue[2], "WITHDRAW")){
+                    event.setDirection("OUT");
                 }
             }
 
