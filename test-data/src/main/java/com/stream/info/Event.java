@@ -1,7 +1,5 @@
 package com.stream.info;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.HashMap;
@@ -234,8 +232,13 @@ public class Event {
 
         for(Field field : fields){
             boolean isAnnotation = field.isAnnotationPresent(AttibuteName.class);
-            String value = String.valueOf(field.get(this));
-            if(StringUtils.isNotBlank(value)) {
+            Object value = field.get(this);
+
+            if(value != null) {
+                if(field.getType() == Date.class){
+                    value = ((Date)value).getTime();
+                }
+
                 if (isAnnotation) {
                     AttibuteName attibuteName = field.getAnnotation(AttibuteName.class);
                     field.setAccessible(true);
