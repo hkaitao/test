@@ -22,6 +22,7 @@ import org.apache.http.impl.client.LaxRedirectStrategy;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
@@ -29,13 +30,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Created by alpha on 2017/5/26.
  */
 /*使用新版本的httpclient发送数据，使用新版本的线程池*/
 @Service(value = "httpClientsender")
-public class HttpClientNewSender {
+public class HttpClientNewSender  implements InitializingBean {
     private static Log logger = LogFactory.getLog(HttpClientNewSender.class);
 
     private static PoolingHttpClientConnectionManager httpClientConnectionManager;
@@ -62,6 +66,12 @@ public class HttpClientNewSender {
 
         redirectStrategy = new LaxRedirectStrategy();
     }
+
+    private static AtomicLong count_sec = new AtomicLong(0);
+
+    private static AtomicLong count_min = new AtomicLong(0);
+
+    private Timer timer = new Timer();
 
     private static HttpRequestRetryHandler httpRequestRetryHandler = new HttpRequestRetryHandler() {
         @Override
@@ -150,6 +160,33 @@ public class HttpClientNewSender {
         } catch (IOException e) {
             logger.error("处理请求异常", e);
         }
+        count_sec.incrementAndGet();
+        count_min.incrementAndGet();
         return jsonStr;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        timer.schedule(new StaticsTaskSec(), 0,1000);
+        timer.schedule(new StaticsTaskMin(),0,60*1000);
+    }
+
+
+    private class StaticsTaskSec extends TimerTask {
+
+        @Override
+        public void run() {
+            logger.info("**********引擎每秒发送数量为：" + count_sec.get());
+            count_sec.set(0L);
+        }
+    }
+
+    private class StaticsTaskMin extends TimerTask{
+
+        @Override
+        public void run() {
+            logger.info("**********引擎每分钟发送数量为：" + count_min.get());
+            count_min.set(0L);
+        }
     }
 }

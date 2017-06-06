@@ -76,6 +76,14 @@ public class HqConfiguration {
         return cFactory;
     }
 
+    @Bean(name="jmsTemplate")
+    public JmsTemplate jmsTemplate(@Qualifier("cachedConnectionFactory") CachingConnectionFactory cFactory) {
+        JmsTemplate jmsTemplate = new JmsTemplate(cFactory);
+        jmsTemplate.setReceiveTimeout(200);
+        jmsTemplate.setMessageIdEnabled(Boolean.FALSE);
+        jmsTemplate.setMessageTimestampEnabled(Boolean.FALSE);
+        return jmsTemplate;
+    }
 
 
     @Bean(name="cachedConnectionFactory1")
@@ -86,6 +94,16 @@ public class HqConfiguration {
         return cFactory;
     }
 
+    @Bean(name="jmsTemplate1")
+    public JmsTemplate jmsTemplate1(@Qualifier("cachedConnectionFactory1") CachingConnectionFactory cFactory) {
+        JmsTemplate jmsTemplate = new JmsTemplate(cFactory);
+        jmsTemplate.setReceiveTimeout(200);
+        jmsTemplate.setMessageIdEnabled(Boolean.FALSE);
+        jmsTemplate.setMessageTimestampEnabled(Boolean.FALSE);
+        return jmsTemplate;
+    }
+
+
     @Bean(name="cachedConnectionFactory2")
     public CachingConnectionFactory cachedConnectionFactory2(@Qualifier("hornetQConnectionFactory") ConnectionFactory factory) {
         CachingConnectionFactory cFactory = new CachingConnectionFactory();
@@ -95,27 +113,12 @@ public class HqConfiguration {
     }
 
 
-
-    @Bean(name="jmsTemplate")
-    public JmsTemplate jmsTemplate(@Qualifier("cachedConnectionFactory") CachingConnectionFactory cFactory) {
-        JmsTemplate jmsTemplate = new JmsTemplate(cFactory);
-        jmsTemplate.setReceiveTimeout(200);
-        return jmsTemplate;
-    }
-
-
-    @Bean(name="jmsTemplate1")
-    public JmsTemplate jmsTemplate1(@Qualifier("cachedConnectionFactory1") CachingConnectionFactory cFactory) {
-        JmsTemplate jmsTemplate = new JmsTemplate(cFactory);
-        jmsTemplate.setReceiveTimeout(200);
-        return jmsTemplate;
-    }
-
-
     @Bean(name="jmsTemplate2")
     public JmsTemplate jmsTemplate2(@Qualifier("cachedConnectionFactory2") CachingConnectionFactory cFactory) {
         JmsTemplate jmsTemplate = new JmsTemplate(cFactory);
         jmsTemplate.setReceiveTimeout(200);
+        jmsTemplate.setMessageIdEnabled(Boolean.FALSE);
+        jmsTemplate.setMessageTimestampEnabled(Boolean.FALSE);
         return jmsTemplate;
     }
 
@@ -133,11 +136,13 @@ public class HqConfiguration {
     public JmsTemplate jmsTemplate3(@Qualifier("cachedConnectionFactory3") CachingConnectionFactory cFactory) {
         JmsTemplate jmsTemplate = new JmsTemplate(cFactory);
         jmsTemplate.setReceiveTimeout(200);
+        jmsTemplate.setMessageIdEnabled(Boolean.FALSE);
+        jmsTemplate.setMessageTimestampEnabled(Boolean.FALSE);
         return jmsTemplate;
     }
 
 
-    @Bean(name="cachedConnectionFactory4")
+/*    @Bean(name="cachedConnectionFactory4")
     public CachingConnectionFactory cachedConnectionFactory4(@Qualifier("hornetQConnectionFactory") ConnectionFactory factory) {
         CachingConnectionFactory cFactory = new CachingConnectionFactory();
         cFactory.setTargetConnectionFactory(factory);
@@ -150,10 +155,10 @@ public class HqConfiguration {
         JmsTemplate jmsTemplate = new JmsTemplate(cFactory);
         jmsTemplate.setReceiveTimeout(200);
         return jmsTemplate;
-    }
+    }*/
 
 
-    @Bean(name="cachedConnectionFactory5")
+/*    @Bean(name="cachedConnectionFactory5")
     public CachingConnectionFactory cachedConnectionFactory5(@Qualifier("hornetQConnectionFactory") ConnectionFactory factory) {
         CachingConnectionFactory cFactory = new CachingConnectionFactory();
         cFactory.setTargetConnectionFactory(factory);
@@ -166,10 +171,10 @@ public class HqConfiguration {
         JmsTemplate jmsTemplate = new JmsTemplate(cFactory);
         jmsTemplate.setReceiveTimeout(200);
         return jmsTemplate;
-    }
+    }*/
 
 
-    @Bean(name="cachedConnectionFactory6")
+/*    @Bean(name="cachedConnectionFactory6")
     public CachingConnectionFactory cachedConnectionFactory6(@Qualifier("hornetQConnectionFactory") ConnectionFactory factory) {
         CachingConnectionFactory cFactory = new CachingConnectionFactory();
         cFactory.setTargetConnectionFactory(factory);
@@ -182,7 +187,7 @@ public class HqConfiguration {
         JmsTemplate jmsTemplate = new JmsTemplate(cFactory);
         jmsTemplate.setReceiveTimeout(200);
         return jmsTemplate;
-    }
+    }*/
 
 
 /*    @Bean(name="cachedConnectionFactory7")
