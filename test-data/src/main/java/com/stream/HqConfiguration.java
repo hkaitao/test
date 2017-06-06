@@ -1,5 +1,10 @@
 package com.stream;
 
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.hornetq.api.core.TransportConfiguration;
 import org.hornetq.api.jms.HornetQJMSClient;
 import org.hornetq.api.jms.JMSFactoryType;
@@ -10,15 +15,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.jms.connection.CachingConnectionFactory;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.jndi.JndiObjectFactoryBean;
-import org.springframework.jndi.JndiTemplate;
+import org.springframework.web.client.RestTemplate;
 
 import javax.jms.*;
-import javax.naming.NamingException;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Properties;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/5/27.
@@ -204,4 +210,22 @@ public class HqConfiguration {
         jmsTemplate.setReceiveTimeout(200);
         return jmsTemplate;
     }*/
+
+
+    @Bean(name="restTemplate")
+    public RestTemplate restTemplate(){
+        int poolSize = 4;
+        PoolingHttpClientConnectionManager connMgr = new PoolingHttpClientConnectionManager();
+        connMgr.setMaxTotal(poolSize + 1);
+        connMgr.setDefaultMaxPerRoute(poolSize);
+        CloseableHttpClient httpClient = HttpClients.custom().setConnectionManager(connMgr).build();
+        RestTemplate template = new RestTemplate(new HttpComponentsClientHttpRequestFactory(httpClient));
+        List<HttpMessageConverter<?>> converters = new ArrayList<>();
+        FastJsonHttpMessageConverter fastjson = new FastJsonHttpMessageConverter();
+        fastjson.setFeatures(SerializerFeature.WriteClassName, SerializerFeature.BrowserCompatible, SerializerFeature.DisableCircularReferenceDetect);
+        converters.add(fastjson);
+        template.setMessageConverters(converters);
+        return template;
+    }
+
 }
