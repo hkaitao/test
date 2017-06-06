@@ -24,7 +24,7 @@ public class RuleTestTask implements ApplicationListener<ContextRefreshedEvent>{
     @Autowired
     private RandomDataTask randomDataTask;
 
-    private boolean switchCase = false;
+    private boolean switchCase = true;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
