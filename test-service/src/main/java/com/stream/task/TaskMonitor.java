@@ -1,7 +1,6 @@
 package com.stream.task;
 
 import com.stream.factory.EventFactory;
-import com.stream.info.Event;
 import com.yjf.common.log.Logger;
 import com.yjf.common.log.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +33,8 @@ public class TaskMonitor  implements ApplicationListener<ContextRefreshedEvent> 
                 thread.setDaemon(true);
                 thread.start();
             }
+
+
         }
     }
 
