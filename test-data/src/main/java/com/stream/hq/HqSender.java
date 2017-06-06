@@ -59,7 +59,7 @@ public class HqSender implements InitializingBean{
 
         @Override
         public void run() {
-            logger.info("**********流立方每秒发送数量为：" + count_sec.get());
+            logger.info("**********队列每秒发送数量为：" + count_sec.get());
             count_sec.set(0L);
         }
     }
@@ -68,7 +68,7 @@ public class HqSender implements InitializingBean{
 
         @Override
         public void run() {
-            logger.info("**********流立方每分钟发送数量为：" + count_min.get());
+            logger.info("**********队列每分钟发送数量为：" + count_min.get());
             count_min.set(0L);
         }
     }

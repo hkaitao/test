@@ -15,15 +15,14 @@ import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Created by Administrator on 2017/6/6.
  */
 @Service("restTemplateSender")
-public class RestTemplateSender implements ApplicationListener<ContextRefreshedEvent> {
+public class RestTemplateSender implements ApplicationListener<ContextRefreshedEvent>,InitializingBean {
 
     protected static final Logger logger = LoggerFactory.getLogger(RestTemplateSender.class);
 
@@ -31,10 +30,17 @@ public class RestTemplateSender implements ApplicationListener<ContextRefreshedE
 
     private static String url = "http://192.168.45.142:8550/push/sync";
 
+    private static AtomicLong count_sec = new AtomicLong(0);
+
+    private static AtomicLong count_min = new AtomicLong(0);
+
+    private Timer timer = new Timer();
+
     public static void sendOrderQueue(List<Object> objs){
         List<Object> pojoList = conversionToDS(objs);
         restTemplate.postForEntity(url, new HttpEntity<>(pojoList), null);
-
+        count_sec.incrementAndGet();
+        count_min.incrementAndGet();
     }
 
 
@@ -182,5 +188,30 @@ public class RestTemplateSender implements ApplicationListener<ContextRefreshedE
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         restTemplate = (RestTemplate) SpringUtil.getObject("restTemplate");
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        timer.schedule(new StaticsTaskSec(), 0,1000);
+        timer.schedule(new StaticsTaskMin(),0,60*1000);
+    }
+
+
+    private class StaticsTaskSec extends TimerTask {
+
+        @Override
+        public void run() {
+            logger.info("**********流立方每秒发送数量为：" + count_sec.get());
+            count_sec.set(0L);
+        }
+    }
+
+    private class StaticsTaskMin extends TimerTask{
+
+        @Override
+        public void run() {
+            logger.info("**********流立方每分钟发送数量为：" + count_min.get());
+            count_min.set(0L);
+        }
     }
 }
