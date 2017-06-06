@@ -29,6 +29,8 @@ public class HqSender implements InitializingBean{
 
     private AtomicLong count = new AtomicLong(0);
 
+    private Timer timer = new Timer();
+
     public void send(JmsTemplate jmsTemplate,String json){
 
         jmsTemplate.send(queue, new MessageCreator() {
@@ -46,7 +48,6 @@ public class HqSender implements InitializingBean{
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        Timer timer = new Timer();
         timer.schedule(buildTimerTask(), 3*1000);
     }
 
