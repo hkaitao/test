@@ -1,12 +1,14 @@
 package com.stream;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * Created by alpha on 2017/5/24.
  */
 @SpringBootApplication
+@EnableAutoConfiguration
 public class Main {
     private static final String PROFILE = "stest";
 

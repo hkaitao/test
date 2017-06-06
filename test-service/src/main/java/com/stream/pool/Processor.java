@@ -1,10 +1,10 @@
 package com.stream.pool;
 
 import com.alibaba.fastjson.JSONObject;
-import com.stream.hq.HqProducer;
 import com.stream.hq.HqSender;
 import com.stream.info.Event;
 import com.stream.util.HttpClientNewSender;
+import com.stream.task.RestTemplateSender;
 import com.yjf.common.log.Logger;
 import com.yjf.common.log.LoggerFactory;
 import org.springframework.jms.core.JmsTemplate;
@@ -42,8 +42,9 @@ public class Processor<T> implements Runnable{
             List list = new ArrayList<>();
             list.add(t);
             String json = JSONObject.toJSONString(list);
-//            logger.info("发送数据:{}",json);
             hqSender.send(jmsTemplate,json);
+//            logger.info("发送数据:{}",list.toString());
+            RestTemplateSender.sendOrderQueue(list);
         }catch (Exception e){
             logger.error("发送队列业务处理失败",e);
         }

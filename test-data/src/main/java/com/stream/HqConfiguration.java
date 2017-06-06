@@ -1,5 +1,10 @@
 package com.stream;
 
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.hornetq.api.core.TransportConfiguration;
 import org.hornetq.api.jms.HornetQJMSClient;
 import org.hornetq.api.jms.JMSFactoryType;
@@ -10,15 +15,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.jms.connection.CachingConnectionFactory;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.jndi.JndiObjectFactoryBean;
-import org.springframework.jndi.JndiTemplate;
+import org.springframework.web.client.RestTemplate;
 
 import javax.jms.*;
-import javax.naming.NamingException;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Properties;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/5/27.
@@ -76,6 +82,14 @@ public class HqConfiguration {
         return cFactory;
     }
 
+    @Bean(name="jmsTemplate")
+    public JmsTemplate jmsTemplate(@Qualifier("cachedConnectionFactory") CachingConnectionFactory cFactory) {
+        JmsTemplate jmsTemplate = new JmsTemplate(cFactory);
+        jmsTemplate.setReceiveTimeout(200);
+        jmsTemplate.setMessageIdEnabled(Boolean.FALSE);
+        jmsTemplate.setMessageTimestampEnabled(Boolean.FALSE);
+        return jmsTemplate;
+    }
 
 
     @Bean(name="cachedConnectionFactory1")
@@ -86,6 +100,16 @@ public class HqConfiguration {
         return cFactory;
     }
 
+    @Bean(name="jmsTemplate1")
+    public JmsTemplate jmsTemplate1(@Qualifier("cachedConnectionFactory1") CachingConnectionFactory cFactory) {
+        JmsTemplate jmsTemplate = new JmsTemplate(cFactory);
+        jmsTemplate.setReceiveTimeout(200);
+        jmsTemplate.setMessageIdEnabled(Boolean.FALSE);
+        jmsTemplate.setMessageTimestampEnabled(Boolean.FALSE);
+        return jmsTemplate;
+    }
+
+
     @Bean(name="cachedConnectionFactory2")
     public CachingConnectionFactory cachedConnectionFactory2(@Qualifier("hornetQConnectionFactory") ConnectionFactory factory) {
         CachingConnectionFactory cFactory = new CachingConnectionFactory();
@@ -95,27 +119,12 @@ public class HqConfiguration {
     }
 
 
-
-    @Bean(name="jmsTemplate")
-    public JmsTemplate jmsTemplate(@Qualifier("cachedConnectionFactory") CachingConnectionFactory cFactory) {
-        JmsTemplate jmsTemplate = new JmsTemplate(cFactory);
-        jmsTemplate.setReceiveTimeout(200);
-        return jmsTemplate;
-    }
-
-
-    @Bean(name="jmsTemplate1")
-    public JmsTemplate jmsTemplate1(@Qualifier("cachedConnectionFactory1") CachingConnectionFactory cFactory) {
-        JmsTemplate jmsTemplate = new JmsTemplate(cFactory);
-        jmsTemplate.setReceiveTimeout(200);
-        return jmsTemplate;
-    }
-
-
     @Bean(name="jmsTemplate2")
     public JmsTemplate jmsTemplate2(@Qualifier("cachedConnectionFactory2") CachingConnectionFactory cFactory) {
         JmsTemplate jmsTemplate = new JmsTemplate(cFactory);
         jmsTemplate.setReceiveTimeout(200);
+        jmsTemplate.setMessageIdEnabled(Boolean.FALSE);
+        jmsTemplate.setMessageTimestampEnabled(Boolean.FALSE);
         return jmsTemplate;
     }
 
@@ -133,11 +142,13 @@ public class HqConfiguration {
     public JmsTemplate jmsTemplate3(@Qualifier("cachedConnectionFactory3") CachingConnectionFactory cFactory) {
         JmsTemplate jmsTemplate = new JmsTemplate(cFactory);
         jmsTemplate.setReceiveTimeout(200);
+        jmsTemplate.setMessageIdEnabled(Boolean.FALSE);
+        jmsTemplate.setMessageTimestampEnabled(Boolean.FALSE);
         return jmsTemplate;
     }
 
 
-    @Bean(name="cachedConnectionFactory4")
+/*    @Bean(name="cachedConnectionFactory4")
     public CachingConnectionFactory cachedConnectionFactory4(@Qualifier("hornetQConnectionFactory") ConnectionFactory factory) {
         CachingConnectionFactory cFactory = new CachingConnectionFactory();
         cFactory.setTargetConnectionFactory(factory);
@@ -150,10 +161,10 @@ public class HqConfiguration {
         JmsTemplate jmsTemplate = new JmsTemplate(cFactory);
         jmsTemplate.setReceiveTimeout(200);
         return jmsTemplate;
-    }
+    }*/
 
 
-    @Bean(name="cachedConnectionFactory5")
+/*    @Bean(name="cachedConnectionFactory5")
     public CachingConnectionFactory cachedConnectionFactory5(@Qualifier("hornetQConnectionFactory") ConnectionFactory factory) {
         CachingConnectionFactory cFactory = new CachingConnectionFactory();
         cFactory.setTargetConnectionFactory(factory);
@@ -166,10 +177,10 @@ public class HqConfiguration {
         JmsTemplate jmsTemplate = new JmsTemplate(cFactory);
         jmsTemplate.setReceiveTimeout(200);
         return jmsTemplate;
-    }
+    }*/
 
 
-    @Bean(name="cachedConnectionFactory6")
+/*    @Bean(name="cachedConnectionFactory6")
     public CachingConnectionFactory cachedConnectionFactory6(@Qualifier("hornetQConnectionFactory") ConnectionFactory factory) {
         CachingConnectionFactory cFactory = new CachingConnectionFactory();
         cFactory.setTargetConnectionFactory(factory);
@@ -182,7 +193,7 @@ public class HqConfiguration {
         JmsTemplate jmsTemplate = new JmsTemplate(cFactory);
         jmsTemplate.setReceiveTimeout(200);
         return jmsTemplate;
-    }
+    }*/
 
 
 /*    @Bean(name="cachedConnectionFactory7")
@@ -199,4 +210,22 @@ public class HqConfiguration {
         jmsTemplate.setReceiveTimeout(200);
         return jmsTemplate;
     }*/
+
+
+    @Bean(name="restTemplate")
+    public RestTemplate restTemplate(){
+        int poolSize = 4;
+        PoolingHttpClientConnectionManager connMgr = new PoolingHttpClientConnectionManager();
+        connMgr.setMaxTotal(poolSize + 1);
+        connMgr.setDefaultMaxPerRoute(poolSize);
+        CloseableHttpClient httpClient = HttpClients.custom().setConnectionManager(connMgr).build();
+        RestTemplate template = new RestTemplate(new HttpComponentsClientHttpRequestFactory(httpClient));
+        List<HttpMessageConverter<?>> converters = new ArrayList<>();
+        FastJsonHttpMessageConverter fastjson = new FastJsonHttpMessageConverter();
+        fastjson.setFeatures(SerializerFeature.WriteClassName, SerializerFeature.BrowserCompatible, SerializerFeature.DisableCircularReferenceDetect);
+        converters.add(fastjson);
+        template.setMessageConverters(converters);
+        return template;
+    }
+
 }
