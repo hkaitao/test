@@ -23,7 +23,7 @@ public class HotDataTestTaskMonitor implements ApplicationListener<ContextRefres
     private volatile boolean running =  Boolean.TRUE;
 
 
-    private String[] merchantUserId = new String[] { "M1000000000000000000","M1100000000000000000","M1200000000000000000" };
+    private String[] merchantUserId = new String[] { "M1000000000000000020","M1100000000000000021","M1200000000000000022" };
 
     @Autowired
     private RandomDataTask randomDataTask;
@@ -41,11 +41,13 @@ public class HotDataTestTaskMonitor implements ApplicationListener<ContextRefres
             thread0.setDaemon(true);
             thread0.start();
 
+            //每次均超过日限
             Thread thread1 = new Thread(new TaskWorker(10,10001,1));
             thread1.setName("task-monitor" + 1);
             thread1.setDaemon(true);
             thread1.start();
 
+            //超过月限
             Thread thread2 = new Thread(new TaskWorker(11,9091,2));
             thread2.setName("task-monitor" + 2);
             thread2.setDaemon(true);
@@ -92,9 +94,10 @@ public class HotDataTestTaskMonitor implements ApplicationListener<ContextRefres
                 for (int i=0;i<day;i++){
                     try {
                         Event e = EventFactory.buildEvent();
-                        e.setTradeAmont(10L);
-                        sum = sum + 10;
-                        daysum = daysum+10;
+                        Long ta = 10000L;
+                        e.setTradeAmont(ta);
+                        sum = sum + ta;
+                        daysum = daysum+ta;
                         e.setMerchantUserId(merchantUserId[merchantUserIdIndex]);
                         e.setCreateTime(new Date(time+i));
                         randomDataTask.exec(e);

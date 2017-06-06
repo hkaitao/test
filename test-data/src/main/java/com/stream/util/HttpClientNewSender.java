@@ -45,7 +45,8 @@ public class HttpClientNewSender {
     private static int HTTP_MAX_CONNECTIONS_PER_ROUTE = 1000;
     private static int HTTPCLIENT_CONNECT_TIMEOUT = 10*1000;
     private static int HTTPCLIENT_SOCKET_TIMEOUT = 10*1000;
-    private static String url = "http://192.168.45.142:9380/audit";
+//    private static String url = "http://192.168.45.142:9380/audit";
+    private static String url =  "http://192.168.45.142:9100/audit";
     private static String jsonPrefix = "cn.com.bsfit.frms.obj.AuditObject";
 
     static {
@@ -144,7 +145,7 @@ public class HttpClientNewSender {
                     }
                 }*/
                 jsonStr = EntityUtils.toString(httpEntity, "UTF-8");
-                logger.info("返回的结果为：" + jsonStr);
+                logger.info("风控返回的结果为：" + jsonStr);
             }
         } catch (IOException e) {
             logger.error("处理请求异常", e);
