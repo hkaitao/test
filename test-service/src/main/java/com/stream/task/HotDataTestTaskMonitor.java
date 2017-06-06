@@ -22,6 +22,21 @@ public class HotDataTestTaskMonitor implements ApplicationListener<ContextRefres
 
     private volatile boolean running =  Boolean.TRUE;
 
+    private int m1_c = 10;
+
+    private int m1_t = 10000;
+
+    private int m2_c = 9;
+
+    private int m2_t = 10001;
+
+    private int m3_c = 11;
+
+    private int m3_t = 9091;
+
+    private long money = 10000L;
+
+
 
     private String[] merchantUserId = new String[] { "M1000000000000000020","M1100000000000000021","M1200000000000000022" };
 
@@ -36,19 +51,19 @@ public class HotDataTestTaskMonitor implements ApplicationListener<ContextRefres
             thread0.setDaemon(true);
             thread0.start()*/;
 
-            Thread thread0 = new Thread(new TaskWorker(10,10000,0));
+            Thread thread0 = new Thread(new TaskWorker(m1_c,m1_t,0));
             thread0.setName("task-monitor" + 0);
             thread0.setDaemon(true);
             thread0.start();
 
             //每次均超过日限
-            Thread thread1 = new Thread(new TaskWorker(10,10001,1));
+            Thread thread1 = new Thread(new TaskWorker(m2_c,m2_t,1));
             thread1.setName("task-monitor" + 1);
             thread1.setDaemon(true);
             thread1.start();
 
             //超过月限
-            Thread thread2 = new Thread(new TaskWorker(11,9091,2));
+            Thread thread2 = new Thread(new TaskWorker(m3_c,m3_t,2));
             thread2.setName("task-monitor" + 2);
             thread2.setDaemon(true);
             thread2.start();
@@ -59,7 +74,7 @@ public class HotDataTestTaskMonitor implements ApplicationListener<ContextRefres
             thread0.setDaemon(true);
             thread0.start();
 
-            Thread thread1 = new Thread(new TaskWorker(10,100001,1));
+            Thread thread1 = new Thread(new TaskWorker(9,100001,1));
             thread1.setName("task-monitor" + 1);
             thread1.setDaemon(true);
             thread1.start();
@@ -92,21 +107,28 @@ public class HotDataTestTaskMonitor implements ApplicationListener<ContextRefres
                 long daysum=0;
                 time = time + 86400000;  //加一天
                 for (int i=0;i<day;i++){
+                    Event e = EventFactory.buildEvent();
                     try {
-                        Event e = EventFactory.buildEvent();
-                        Long ta = 10000L;
+                        Long ta = money;
                         e.setTradeAmont(ta);
                         sum = sum + ta;
                         daysum = daysum+ta;
                         e.setMerchantUserId(merchantUserId[merchantUserIdIndex]);
-                        e.setCreateTime(new Date(time+i));
-                        randomDataTask.exec(e);
+                        e.setCreateTime(new Date(time + i));
+//                        randomDataTask.exec(e);
                     } catch (Throwable throwable) {
                         logger.error("出现意外错误",throwable);
+                    }
+                    if(month==m2_c && day==m2_t && i==day-1){
+                        logger.info("日上限_探头数据：{}",e.toString());
+                    }
+                    if(month==m3_c && day==m3_t && j==month-1 && i== day-1){
+                        logger.info("月上限_探头数据：{}",e.toString());
                     }
                 }
                 logger.info("商户号：{}，日金额：{}",merchantUserId[merchantUserIdIndex],daysum);
             }
+
             logger.info("商户号：{}，总金额：{}",merchantUserId[merchantUserIdIndex],sum);
         }
     }

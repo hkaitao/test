@@ -42,7 +42,7 @@ public class Processor<T> implements Runnable{
             List list = new ArrayList<>();
             list.add(t);
             String json = JSONObject.toJSONString(list);
-            logger.info("发送数据:{}",json);
+//            logger.info("发送数据:{}",json);
             hqSender.send(jmsTemplate,json);
         }catch (Exception e){
             logger.error("发送队列业务处理失败",e);
