@@ -115,7 +115,7 @@ public class HotDataTestTaskMonitor implements ApplicationListener<ContextRefres
                         daysum = daysum+ta;
                         e.setMerchantUserId(merchantUserId[merchantUserIdIndex]);
                         e.setCreateTime(new Date(time + i));
-//                        randomDataTask.exec(e);
+                        randomDataTask.exec(e);
                     } catch (Throwable throwable) {
                         logger.error("出现意外错误",throwable);
                     }
