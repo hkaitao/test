@@ -123,7 +123,7 @@ public class HttpClientNewSender {
                 String classname = jsonPrefixArray[1].substring(1, jsonPrefixArray[1].length() - 1);
 
                 jsonString = jsonString.replace(classname, jsonPrefix);
-                logger.info("发送到风控引擎的数据：" + jsonString);
+//                logger.info("发送到风控引擎的数据：" + jsonString);
                 is = new ByteArrayInputStream(jsonString.getBytes());
             }
 
@@ -145,7 +145,7 @@ public class HttpClientNewSender {
                     }
                 }*/
                 jsonStr = EntityUtils.toString(httpEntity, "UTF-8");
-                logger.info("风控返回的结果为：" + jsonStr);
+//                logger.info("风控返回的结果为：" + jsonStr);
             }
         } catch (IOException e) {
             logger.error("处理请求异常", e);
