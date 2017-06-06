@@ -123,6 +123,7 @@ public class HttpClientNewSender {
                 String classname = jsonPrefixArray[1].substring(1, jsonPrefixArray[1].length() - 1);
 
                 jsonString = jsonString.replace(classname, jsonPrefix);
+                logger.info("发送到风控引擎的数据：" + jsonString);
                 is = new ByteArrayInputStream(jsonString.getBytes());
             }
 
