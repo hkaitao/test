@@ -71,6 +71,8 @@ public class HttpClientNewSender  implements InitializingBean {
 
     private static AtomicLong count_min = new AtomicLong(0);
 
+    private static Long processTime;
+
     private Timer timer = new Timer();
 
     private static HttpRequestRetryHandler httpRequestRetryHandler = new HttpRequestRetryHandler() {
@@ -105,6 +107,7 @@ public class HttpClientNewSender  implements InitializingBean {
     }
 
     public static String send(Object object) {
+        long t1 = System.currentTimeMillis();
         CloseableHttpClient httpClient = getHttpClient();
         CloseableHttpResponse httpResponse = null;
 
@@ -160,6 +163,7 @@ public class HttpClientNewSender  implements InitializingBean {
         } catch (IOException e) {
             logger.error("处理请求异常", e);
         }
+        processTime = System.currentTimeMillis() - t1;
         count_sec.incrementAndGet();
         count_min.incrementAndGet();
         return jsonStr;
@@ -176,7 +180,7 @@ public class HttpClientNewSender  implements InitializingBean {
 
         @Override
         public void run() {
-            logger.info("**********引擎每秒发送数量为：" + count_sec.get());
+            logger.info("**********引擎每秒发送数量为："+ count_sec.get() + ",抽样耗时:" + processTime);
             count_sec.set(0L);
         }
     }

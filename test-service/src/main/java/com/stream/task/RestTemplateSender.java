@@ -34,11 +34,15 @@ public class RestTemplateSender implements ApplicationListener<ContextRefreshedE
 
     private static AtomicLong count_min = new AtomicLong(0);
 
+    private static Long processTime;
+
     private Timer timer = new Timer();
 
     public static void sendOrderQueue(List<Object> objs){
+        long t1 = System.currentTimeMillis();
         List<Object> pojoList = conversionToDS(objs);
         restTemplate.postForEntity(url, new HttpEntity<>(pojoList), null);
+        processTime = System.currentTimeMillis() - t1;
         count_sec.incrementAndGet();
         count_min.incrementAndGet();
     }
@@ -201,7 +205,7 @@ public class RestTemplateSender implements ApplicationListener<ContextRefreshedE
 
         @Override
         public void run() {
-            logger.info("**********流立方每秒发送数量为：" + count_sec.get());
+            logger.info("**********流立方每秒发送数量为：{},抽样耗时:{}",count_sec.get(),processTime);
             count_sec.set(0L);
         }
     }

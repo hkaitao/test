@@ -41,8 +41,8 @@ public class Processor<T> implements Runnable{
         try {
             List list = new ArrayList<>();
             list.add(t);
-            String json = JSONObject.toJSONString(list);
-            hqSender.send(jmsTemplate,json);
+           /* String json = JSONObject.toJSONString(list);
+            hqSender.send(jmsTemplate,json);*/
 //            logger.info("发送数据:{}",list.toString());
             RestTemplateSender.sendOrderQueue(list);
         }catch (Exception e){

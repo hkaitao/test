@@ -27,11 +27,11 @@ public class HqSender implements InitializingBean{
     @Autowired
     private Queue queue;
 
-    private AtomicLong count_sec = new AtomicLong(0);
+ /*   private AtomicLong count_sec = new AtomicLong(0);
 
     private AtomicLong count_min = new AtomicLong(0);
 
-    private Timer timer = new Timer();
+    private Timer timer = new Timer();*/
 
     public void send(JmsTemplate jmsTemplate,String json){
 
@@ -41,21 +41,21 @@ public class HqSender implements InitializingBean{
                 return session.createTextMessage(json);
             }
         });
-        count_sec.incrementAndGet();
-        count_min.incrementAndGet();
+  /*      count_sec.incrementAndGet();
+        count_min.incrementAndGet();*/
     }
 
-    public TimerTask buildTimerTask(){
+/*    public TimerTask buildTimerTask(){
         return new StaticsTaskSec();
-    }
+    }*/
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        timer.schedule(buildTimerTask(), 0,1000);
-        timer.schedule(new StaticsTaskMin(),0,60*1000);
+       /* timer.schedule(buildTimerTask(), 0,1000);
+        timer.schedule(new StaticsTaskMin(),0,60*1000);*/
     }
 
-    private class StaticsTaskSec extends TimerTask{
+/*    private class StaticsTaskSec extends TimerTask{
 
         @Override
         public void run() {
@@ -71,5 +71,5 @@ public class HqSender implements InitializingBean{
             logger.info("**********队列每分钟发送数量为：" + count_min.get());
             count_min.set(0L);
         }
-    }
+    }*/
 }
