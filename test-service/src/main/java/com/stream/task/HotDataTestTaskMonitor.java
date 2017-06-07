@@ -41,7 +41,7 @@ public class HotDataTestTaskMonitor implements ApplicationListener<ContextRefres
 
 
 
-    private String[] merchantUserId = new String[] { "M1000000000000000210","M1100000000000000211","M1200000000000000212" };
+    private String[] merchantUserId = new String[] { "M1000000000000000240","M1100000000000000241","M1200000000000000242" };
 
     @Autowired
     private RandomDataTask randomDataTask;
@@ -120,7 +120,7 @@ public class HotDataTestTaskMonitor implements ApplicationListener<ContextRefres
                         e.setCreateTime(new Date(time + i));
 
                         if(month==m2_c && day==m2_t && i==day-1){
-                            long delay = 50;
+                            long delay = 100;
                             sleep(delay);
                             logger.info("日上限_探头数据：{},延迟{}ms发送", e.toString(), delay);
                             randomDataTask.exec(e);
