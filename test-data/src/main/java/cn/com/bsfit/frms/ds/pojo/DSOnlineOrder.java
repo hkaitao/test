@@ -1,4 +1,4 @@
-package com.stream.info;
+package cn.com.bsfit.frms.ds.pojo;
 
 import java.io.Serializable;
 import java.util.Date;

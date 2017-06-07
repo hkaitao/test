@@ -2,8 +2,7 @@ package com.stream.task;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.stream.hq.HqSender;
-import com.stream.info.DSOnlineOrder;
+import cn.com.bsfit.frms.ds.pojo.DSOnlineOrder;
 import com.stream.util.SpringUtil;
 import com.yjf.common.log.Logger;
 import com.yjf.common.log.LoggerFactory;
