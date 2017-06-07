@@ -3,6 +3,7 @@ package com.stream.task;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import cn.com.bsfit.frms.ds.pojo.DSOnlineOrder;
+import com.stream.util.OrderQueueSender;
 import com.stream.util.SpringUtil;
 import com.yjf.common.log.Logger;
 import com.yjf.common.log.LoggerFactory;
@@ -40,7 +41,8 @@ public class RestTemplateSender implements ApplicationListener<ContextRefreshedE
     public static void sendOrderQueue(List<Object> objs){
         long t1 = System.currentTimeMillis();
         List<Object> pojoList = conversionToDS(objs);
-        restTemplate.postForEntity(url, new HttpEntity<>(pojoList), null);
+        OrderQueueSender.send(pojoList);
+//        restTemplate.postForEntity(url, new HttpEntity<>(pojoList), null);
         processTime = System.currentTimeMillis() - t1;
         count_sec.incrementAndGet();
         count_min.incrementAndGet();
