@@ -120,7 +120,6 @@ public class HotDataTestTaskMonitor implements ApplicationListener<ContextRefres
                             long delay = 0;
                             sleep(delay);
                             logger.info("日上限_探头数据：{},延迟{}ms发送", e.toString(),delay);
-
                             randomDataTask.exec(e);
                         }else if(month==m3_c && day==m3_t && j==month-1 && i== day-1){
                             long delay = 0;
