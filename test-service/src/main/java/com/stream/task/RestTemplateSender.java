@@ -27,7 +27,7 @@ public class RestTemplateSender implements ApplicationListener<ContextRefreshedE
 
     protected static RestTemplate restTemplate;
 
-    private static String url = "http://192.168.45.142:8550/push/sync";
+    private static String url = "http://192.168.45.142:8700/push/sync";
 
     private static AtomicLong count_sec = new AtomicLong(0);
 
