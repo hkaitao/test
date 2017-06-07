@@ -29,15 +29,15 @@ public class RuleTestTask implements ApplicationListener<ContextRefreshedEvent>{
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         try {
-            Thread thread1 = new Thread(new TestTask(ExcelParser.parseExcel("rule1/rule1.xlsx", this.getClass())));
-            Thread thread2 = new Thread(new TestTask(ExcelParser.parseExcel("rule2/rule2.xlsx", this.getClass())));
-            Thread thread3 = new Thread(new TestTask(ExcelParser.parseExcel("rule3/rule3.xlsx", this.getClass())));
-            Thread thread4 = new Thread(new TestTask(ExcelParser.parseExcel("rule4/rule4.xlsx", this.getClass())));
-            Thread thread5 = new Thread(new TestTask(ExcelParser.parseExcel("rule5/rule5.xlsx", this.getClass())));
-            Thread thread6 = new Thread(new TestTask(ExcelParser.parseExcel("rule6/rule6.xlsx", this.getClass())));
-            Thread thread7 = new Thread(new TestTask(ExcelParser.parseExcel("rule7/rule7.xlsx", this.getClass())));
-            Thread thread8 = new Thread(new TestTask(ExcelParser.parseExcel("rule8/rule8.xlsx", this.getClass())));
-            Thread thread9 = new Thread(new TestTask(ExcelParser.parseExcel("rule9/rule9.xlsx", this.getClass())));
+            Thread thread1 = new Thread(new TestTask(ExcelParser.parseExcel("/rule1/rule1.xlsx", this.getClass())));
+            Thread thread2 = new Thread(new TestTask(ExcelParser.parseExcel("/rule2/rule2.xlsx", this.getClass())));
+            Thread thread3 = new Thread(new TestTask(ExcelParser.parseExcel("/rule3/rule3.xlsx", this.getClass())));
+            Thread thread4 = new Thread(new TestTask(ExcelParser.parseExcel("/rule4/rule4.xlsx", this.getClass())));
+            Thread thread5 = new Thread(new TestTask(ExcelParser.parseExcel("/rule5/rule5.xlsx", this.getClass())));
+            Thread thread6 = new Thread(new TestTask(ExcelParser.parseExcel("/rule6/rule6.xlsx", this.getClass())));
+            Thread thread7 = new Thread(new TestTask(ExcelParser.parseExcel("/rule7/rule7.xlsx", this.getClass())));
+            Thread thread8 = new Thread(new TestTask(ExcelParser.parseExcel("/rule8/rule8.xlsx", this.getClass())));
+            Thread thread9 = new Thread(new TestTask(ExcelParser.parseExcel("/rule9/rule9.xlsx", this.getClass())));
 
             if(switchCase) {
                 thread1.start();

@@ -8,8 +8,8 @@ import com.yjf.common.util.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class ExcelParser {
 
     public static List<Event> parseExcel(String dataPath, Class clazz) throws IOException, ParseException {
         ClassLoader classLoader = clazz.getClassLoader();
-        BufferedInputStream bufferedInputStream = (BufferedInputStream) classLoader.getResourceAsStream(dataPath);
+        InputStream bufferedInputStream = clazz.getResourceAsStream(dataPath);
         ExcelReadGenerator excelReadGenerator = new ExcelReadGeneratorImpl(0, HEADER_INFO.length,
                 bufferedInputStream, isExcel2003(dataPath));
         List<Event> eventList = new ArrayList<Event>();
