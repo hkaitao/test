@@ -115,21 +115,40 @@ public class HotDataTestTaskMonitor implements ApplicationListener<ContextRefres
                         daysum = daysum+ta;
                         e.setMerchantUserId(merchantUserId[merchantUserIdIndex]);
                         e.setCreateTime(new Date(time + i));
-                        randomDataTask.exec(e);
+
+                        if(month==m2_c && day==m2_t && i==day-1){
+                            long delay = 0;
+                            sleep(delay);
+                            logger.info("日上限_探头数据：{},延迟{}ms发送", e.toString(),delay);
+
+                            randomDataTask.exec(e);
+                        }else if(month==m3_c && day==m3_t && j==month-1 && i== day-1){
+                            long delay = 0;
+                            sleep(delay);
+                            logger.info("月上限_探头数据：{},延迟{}ms发送", e.toString(),delay);
+                            randomDataTask.exec(e);
+                        }else{
+                            randomDataTask.exec(e);
+                        }
+
                     } catch (Throwable throwable) {
                         logger.error("出现意外错误",throwable);
                     }
-                    if(month==m2_c && day==m2_t && i==day-1){
-                        logger.info("日上限_探头数据：{}",e.toString());
-                    }
-                    if(month==m3_c && day==m3_t && j==month-1 && i== day-1){
-                        logger.info("月上限_探头数据：{}",e.toString());
-                    }
+
                 }
                 logger.info("商户号：{}，日金额：{}",merchantUserId[merchantUserIdIndex],daysum);
             }
 
             logger.info("商户号：{}，总金额：{}",merchantUserId[merchantUserIdIndex],sum);
+        }
+    }
+
+
+    private void sleep(long millisecond){
+        try {
+            Thread.sleep(millisecond);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }
